@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BNS - Sovereign Criminal Jurisprudence & Penal Intelligence Radar</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  
+  <!-- Leaflet CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- OpenIBC Master Stylesheet, Supabase Client & Calnode Booking Widget -->
+  <link rel="stylesheet" href="/style.css?v=20261111e" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/embed.js" async></script>
+</head>
+<body>
+
+  <!-- BNS Sovereign Master Header -->
+  <header class="site-header">
+    
+    <!-- 1. Left: Brand Lockup & Subdomain Switcher -->
+    <div class="brand-container">
+      <div class="brand-lockup" id="brand-trigger">
+        <a href="/" style="display:flex;align-items:center;text-decoration:none;">
+          <svg class="unicorn-icon" viewBox="0 0 852 845">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M 810 92 L 799 94 L 796 96 L 792 96 L 785 99 L 781 99 L 760 105 L 757 107 L 749 108 L 746 110 L 742 110 L 736 113 L 732 113 L 725 116 L 721 116 L 718 118 L 711 119 L 708 121 L 700 122 L 690 126 L 682 127 L 679 129 L 672 130 L 658 135 L 654 135 L 651 137 L 633 141 L 630 143 L 626 143 L 619 146 L 605 149 L 602 151 L 598 151 L 591 154 L 587 154 L 573 159 L 566 160 L 563 162 L 559 162 L 552 165 L 548 165 L 538 168 L 535 170 L 527 171 L 525 172 L 524 175 L 532 187 L 532 190 L 534 192 L 533 196 L 520 177 L 508 165 L 489 152 L 469 143 L 464 143 L 461 140 L 458 139 L 470 138 L 484 140 L 486 138 L 487 131 L 490 124 L 490 120 L 493 115 L 493 112 L 495 110 L 496 105 L 498 103 L 498 101 L 504 90 L 519 68 L 509 69 L 498 72 L 479 80 L 455 94 L 454 96 L 452 96 L 441 105 L 437 105 L 438 97 L 446 79 L 446 76 L 449 72 L 454 58 L 457 54 L 460 45 L 462 43 L 463 36 L 460 36 L 457 38 L 451 39 L 449 41 L 436 45 L 434 47 L 426 50 L 418 55 L 416 55 L 386 74 L 357 97 L 321 133 L 317 134 L 317 132 L 323 123 L 323 121 L 334 106 L 339 101 L 341 97 L 333 97 L 327 99 L 320 99 L 305 102 L 301 104 L 292 105 L 277 110 L 273 110 L 261 115 L 249 118 L 244 121 L 241 121 L 215 132 L 178 152 L 153 169 L 131 187 L 104 215 L 91 232 L 85 244 L 87 244 L 90 241 L 92 241 L 99 236 L 107 233 L 133 219 L 144 214 L 149 213 L 151 211 L 154 211 L 156 209 L 172 203 L 193 197 L 198 197 L 208 194 L 213 196 L 205 201 L 186 209 L 161 223 L 134 241 L 109 261 L 87 283 L 71 303 L 55 331 L 46 355 L 46 360 L 44 363 L 43 373 L 41 377 L 41 384 L 38 396 L 36 423 L 36 442 L 38 467 L 40 472 L 43 492 L 46 499 L 46 503 L 49 509 L 49 512 L 52 517 L 52 520 L 54 522 L 55 527 L 57 529 L 63 543 L 68 550 L 68 552 L 84 574 L 107 598 L 126 614 L 129 615 L 133 619 L 173 644 L 202 658 L 218 664 L 220 666 L 223 666 L 235 672 L 253 678 L 263 683 L 266 683 L 276 688 L 279 688 L 284 691 L 287 691 L 345 716 L 344 708 L 339 695 L 339 691 L 331 672 L 314 641 L 300 621 L 290 609 L 291 606 L 295 609 L 297 609 L 311 619 L 331 636 L 348 654 L 365 677 L 375 693 L 376 697 L 382 707 L 387 719 L 389 721 L 389 724 L 397 742 L 403 761 L 406 777 L 408 781 L 409 791 L 411 796 L 412 808 L 415 808 L 430 782 L 430 780 L 438 766 L 438 764 L 440 762 L 454 729 L 454 726 L 462 706 L 463 699 L 465 696 L 468 680 L 470 676 L 471 666 L 474 654 L 474 647 L 476 641 L 477 624 L 476 582 L 474 576 L 473 564 L 468 548 L 468 544 L 462 528 L 455 513 L 452 509 L 451 505 L 441 491 L 440 488 L 424 468 L 412 456 L 389 439 L 353 404 L 344 391 L 336 374 L 336 370 L 334 367 L 333 362 L 332 342 L 334 329 L 342 307 L 345 302 L 348 302 L 348 327 L 351 341 L 354 347 L 354 350 L 362 364 L 373 375 L 377 378 L 379 378 L 389 384 L 395 386 L 403 387 L 407 389 L 419 389 L 433 392 L 440 395 L 451 402 L 463 414 L 471 426 L 477 438 L 477 441 L 482 452 L 485 464 L 486 475 L 488 479 L 488 484 L 494 501 L 500 508 L 504 510 L 509 510 L 514 507 L 517 503 L 518 500 L 518 489 L 517 484 L 513 476 L 517 475 L 521 478 L 529 488 L 529 490 L 531 492 L 534 499 L 535 504 L 538 510 L 542 514 L 547 516 L 563 515 L 570 511 L 580 501 L 583 496 L 589 480 L 589 474 L 591 468 L 591 452 L 589 445 L 588 431 L 586 427 L 586 422 L 583 410 L 581 407 L 580 400 L 575 388 L 572 375 L 564 355 L 564 351 L 558 336 L 554 322 L 553 314 L 550 307 L 550 301 L 548 296 L 547 281 L 545 273 L 545 237 L 542 224 L 546 220 L 550 219 L 554 216 L 608 191 L 620 184 L 641 175 L 661 164 L 670 161 L 684 153 L 703 145 L 723 134 L 732 131 L 740 126 L 742 126 L 756 118 L 771 112 L 785 104 L 800 98 Z" />
+          </svg>
+        </a>
+
+        <button type="button" class="brand-title-btn" id="brand-title-btn">
+          <span id="brand-title-text">BNS - investigators</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Popover Dropdown Underneath Subdomain -->
+      <div class="subdomain-dropdown" id="subdomain-dropdown">
+        <a href="/investigators/" class="dropdown-item active" data-sub="investigators">investigators</a>
+        <a href="/prosecutors/" class="dropdown-item" data-sub="prosecutors">prosecutors</a>
+        <a href="/advocates/" class="dropdown-item" data-sub="advocates">advocates</a>
+        <a href="/forensics/" class="dropdown-item" data-sub="forensics">forensics</a>
+        <a href="/citizens/" class="dropdown-item" data-sub="citizens">citizens</a>
+      </div>
+    </div>
+
+    <!-- 2. Center: Megamenus Navigation -->
+    <nav>
+      <ul class="nav-links">
+        
+        <!-- Item 1: Opportunities (Direct Map/Radar Link) -->
+        <li class="nav-item">
+          <a href="#" class="nav-btn pill-active" id="nav-opportunities">investigator radar</a>
+        </li>
+
+        <!-- Item 2: Intelligence Mega Menu (740px Flyout) -->
+        <li class="nav-item" id="nav-intelligence-container">
+          <button type="button" class="nav-btn" id="nav-intelligence-btn">
+            <span id="intelligence-label">investigator intelligence</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+
+          <!-- 740px Megamenu Panel -->
+          <div class="megamenu-panel" id="megamenu-intelligence">
+            <div class="megamenu-grid">
+              <!-- Left Column: Assets -->
+              <div class="megamenu-col-left">
+                <div>
+                  <h3 class="megamenu-col-title" id="intelligence-col-title">investigator intelligence</h3>
+                  <div class="space-y-1" id="intelligence-assets-list">
+                    <!-- Populated dynamically per subdomain by radar.js -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Sovereign Execution Dock -->
+              <div class="megamenu-col-dark" style="justify-content:center;">
+                <div class="dock-actions-list" id="intelligence-actions-list" style="margin:0;">
+                  <!-- Populated dynamically by radar.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Item 3: Consultations Mega Menu (740px Flyout) -->
+        <li class="nav-item" id="nav-consultations-container">
+          <button type="button" class="nav-btn" id="nav-consultations-btn">
+            <span id="consultations-label">investigator consultations</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+
+          <!-- 740px Megamenu Panel -->
+          <div class="megamenu-panel" id="megamenu-consultations">
+            <div class="megamenu-grid">
+              <!-- Left Column: Advisory Tracks -->
+              <div class="megamenu-col-left">
+                <div>
+                  <h3 class="megamenu-col-title" id="consultations-col-title">investigator consultations</h3>
+                  <div class="space-y-1" id="consultations-tracks-list">
+                    <!-- Populated dynamically per subdomain by radar.js -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Column: Consultation Scope & Advisory Dock (Unified Narrative Card) -->
+              <div class="megamenu-col-dark" id="calnode-dock">
+                <div id="consultation-dock-container" style="flex:1;display:flex;flex-direction:column;min-height:0;justify-content:space-between;">
+                  <!-- Unified Narrative Card -->
+                  <div class="consultation-scope-card consultation-narrative-card" id="consultation-scope-card">
+                    <p class="consultation-narrative-text" id="consultation-narrative-text">
+                      <strong id="selected-track-name">statutory charge-sheet pre-filing scrutiny</strong> &ndash;
+                      <span id="selected-track-scope">meticulous statutory review of investigation diary, witness statements under section 180 bnss, and scientific FSL reports prior to judicial magistrate submission under section 193 bnss 2023.</span>
+                    </p>
+                    <span id="selected-track-duration" style="display:none;">open</span>
+                    <span id="selected-track-statutory" style="display:none;"><strong id="selected-track-statutory-ref">section 193 bnss 2023</strong></span>
+                  </div>
+
+                  <!-- CTA Button -->
+                  <button type="button" class="fast-track-submit-btn" id="calnode-book-trigger">
+                    <span id="calnode-book-trigger-text">book briefing &rarr;</span>
+                  </button>
+                </div>
+
+                <a href="tel:+919316015274" class="calnode-emergency-contact">
+                  <span style="color:#94a3b8;">emergency contact:</span>
+                  <strong style="color:#34d399;">93160-15274</strong>
+                  <span style="color:#64748b;">(11 am &ndash; 4 pm)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    <!-- 3. Actions Tray (Right): answers, catalog & profile -->
+    <div class="actions-tray">
+      <!-- Answers (Opens Dedicated Forum View without Port Shift) -->
+      <button type="button" class="answers-nav-btn" id="nav-answers-btn">
+        <span>answers</span>
+      </button>
+
+      <!-- Reports (Opens Dedicated Statutory Reports View) -->
+      <button type="button" class="catalog-nav-btn" id="nav-catalog-btn">
+        <span>reports</span>
+      </button>
+
+      <!-- Logged-Out User Gateway -->
+      <div id="auth-logged-out-tray" style="display:none;align-items:center;">
+        <button type="button" class="catalog-nav-btn" id="open-auth-btn">
+          <span>sign in</span>
+        </button>
+      </div>
+
+      <!-- Logged-In User Gateway (Shown when authenticated) -->
+      <div id="auth-logged-in-tray" style="display:none;align-items:center;">
+        <div style="position:relative;">
+          <div class="user-profile-btn" id="user-profile-trigger">
+            <div class="user-avatar-circle" id="user-avatar-text">AD</div>
+            <span id="user-display-name" style="display:none;">admin</span>
+            <svg class="chevron-icon" style="width:13px;height:13px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+
+          <div class="user-profile-dropdown" id="user-profile-dropdown">
+            <div style="padding:8px 10px;border-bottom:1px solid #f1f5f9;margin-bottom:4px;">
+              <span id="user-email-text" style="font-size:11px;font-family:monospace;color:#64748b;display:block;word-break:break-all;line-height:1.2;">admin@openbns.in</span>
+              <span id="user-role-badge" style="display:none;"></span>
+            </div>
+            <button type="button" id="dropdown-workspace-btn" class="dropdown-item" style="width:100%;text-align:left;cursor:pointer;border:none;background:none;font-size:12.5px;padding:5px 10px;text-transform:lowercase;">
+              user console
+            </button>
+            <a href="/admin" id="admin-dashboard-link" class="dropdown-item" style="font-size:12.5px;display:none;padding:5px 10px;text-transform:lowercase;">admin console</a>
+            <button type="button" id="logout-btn" class="dropdown-item" style="width:100%;text-align:left;color:#e11d48;cursor:pointer;border:none;background:none;font-size:12.5px;padding:5px 10px;text-transform:lowercase;">
+              log out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- Main Canvas: Dual View (Radar vs Answers) -->
+  <main class="main-canvas" id="main-canvas" style="display:flex;flex:1;position:relative;overflow:hidden;">
+    
+    <!-- View 1: 16-Bench Statutory Radar Canvas -->
+    <div id="radar-view" class="mobile-mode-list" style="display:flex;flex:1;width:100%;height:100%;position:relative;overflow:hidden;">
+      <!-- Left Sidebar: Opportunities List & Filtering -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          
+          <!-- Mode Switcher: Police Stations vs Professionals Map -->
+          <div class="mode-switcher">
+            <button type="button" class="mode-btn active" id="mode-assets-btn" style="text-transform:lowercase;">police stations</button>
+            <button type="button" class="mode-btn" id="mode-professionals-btn" style="text-transform:lowercase;">professionals map</button>
+          </div>
+
+          <!-- Search -->
+          <div class="search-box" id="search-box-container">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="search-input" placeholder="search police stations, commissionerates, fir, sections, city..." />
+            <button type="button" id="search-clear-btn" class="search-clear-btn" title="clear search" aria-label="clear search">&times;</button>
+          </div>
+        </div>
+
+        <!-- Card List -->
+        <div class="card-list" id="card-list">
+          <!-- Rendered by radar.js -->
+        </div>
+      </aside>
+
+      <!-- Sidebar Toggle Tab Button -->
+      <button type="button" class="sidebar-toggle-tab" id="sidebar-toggle" title="Hide list ([ or \)" aria-label="Hide list" aria-expanded="true">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <!-- Right Leaflet Map Canvas -->
+      <div class="map-canvas">
+        <div id="leaflet-map"></div>
+
+        <!-- Mobile Pin Bottom Preview Card (when pin is tapped on mobile map) -->
+        <div class="mobile-pin-preview" id="mobile-pin-preview" style="display:none;"></div>
+      </div>
+
+      <!-- Right Slide-Out Inspector Drawer (Desktop: Right Panel, Mobile: Full-Screen Drawer) -->
+      <aside class="inspector-drawer" id="inspector-drawer">
+        <!-- Populated on click by radar.js -->
+      </aside>
+
+      <!-- Mobile Floating View Switcher Pill (List vs Map) -->
+      <div class="mobile-view-pill-container" id="mobile-view-pill-container">
+        <button type="button" class="mobile-view-toggle-btn" id="mobile-view-toggle-btn">
+          <svg id="pill-icon-map" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#34d399" stroke-width="2"><path d="M12 21s-6-5.5-6-10.5A6 6 0 0 1 18 10.5c0 5-6 10.5-6 10.5z"/><circle cx="12" cy="10.5" r="2"/></svg>
+          <svg id="pill-icon-list" style="display:none;" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#38bdf8" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span id="mobile-view-label">View Map</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- View 2: Sovereign Answers / Forum View (Native Buildless Q&A, 100% Pixel-Aligned with Catalog) -->
+    <section id="answers-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Statutory Answers Forum">
+      <div class="catalog-shell">
+        <!-- Left Rail: Track Filters (100% pixel-aligned with catalog left rail) -->
+        <aside class="catalog-left-rail" aria-label="Forum Categories">
+          <nav class="catalog-nav-pills" id="forum-track-nav">
+            <button type="button" class="catalog-rail-pill active" data-track="all">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              <span>all questions</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-track="creditors">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+              <span>creditors</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-track="investors">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span>investors</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-track="professionals">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>professionals</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-track="valuers">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>valuers</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (100% pixel-aligned with catalog) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+            <!-- Center Column: Questions Feed Header + Q&A List -->
+            <div class="catalog-main-feed">
+              <div class="catalog-feed-header">
+                <h1 id="forum-feed-title" style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">statutory questions &amp; answers</h1>
+                <div class="catalog-sort-group" id="forum-sort-group" role="group" aria-label="Filter forum questions">
+                  <button type="button" class="catalog-sort-btn active" data-sort="recent">recent</button>
+                  <button type="button" class="catalog-sort-btn" data-sort="precedents">precedents</button>
+                  <button type="button" class="catalog-sort-btn" data-sort="unanswered">unanswered</button>
+                </div>
+              </div>
+
+              <!-- Sovereign LightRAG Answers Search/Ask Dock -->
+              <div id="answers-query-dock" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <svg style="width:17px;height:17px;color:#64748b;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input type="text" id="answers-query-input" placeholder="ask any question across Bharatiya Nyaya Sanhita penal sections & precedents..." style="border:none;outline:none;background:transparent;width:100%;font-size:13.5px;color:#0f172a;font-family:inherit;">
+                  <button type="button" id="answers-query-submit-btn" style="background:#0f172a;color:#ffffff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;">
+                    <span>query graph</span>
+                    <svg style="width:12px;height:12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                  </button>
+                </div>
+                <!-- Dynamic Live Answer Container -->
+                <div id="answers-live-result" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid #e2e8f0;"></div>
+              </div>
+
+              <!-- Question List Container -->
+              <div id="forum-questions-list" class="catalog-feed-list" role="list"></div>
+
+              <!-- Question Detail Overlay / Expanded View -->
+              <div id="forum-question-detail" style="display:none;" class="forum-detail-card"></div>
+            </div>
+
+            <!-- Right Rail: Ask CTA + Statutory Desk Guarantee -->
+            <aside class="catalog-right-rail" aria-label="Statutory Desk & Guidelines">
+              <button type="button" class="catalog-primary-cta" id="forum-ask-trigger-btn" style="text-transform:lowercase;">
+                <svg style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span>ask statutory question &rarr;</span>
+              </button>
+
+              <!-- Card 1: Statutory Desk Info -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span style="text-transform:lowercase;">statutory desk</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy">Insolvency and Bankruptcy Code, 2016 statutory guidance curated by empanelled advocates &amp; registered insolvency professionals.</p>
+                  <ul class="catalog-guarantee-list">
+                    <li>Supreme Court &amp; NCLAT precedent verification</li>
+                    <li>Direct Section &amp; Regulation citations</li>
+                    <li>Zero hallucination guarantee</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 2: Statutory Emergency Contact -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span style="text-transform:lowercase;">emergency contact</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:6px;">For urgent NCLT filing or Section 29A clearance:</p>
+                  <div style="font-weight:700;color:#059669;font-size:13px;letter-spacing:-0.2px;">93160-15274 (11 am &ndash; 4 pm)</div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 3: Statutory Compliance & Valuation Reports (3-Column Unified Catalog) -->
+    <section id="price-list-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Statutory Report Catalog">
+      <div class="catalog-shell">
+        <!-- Left Rail: Category Filters (Matches Answers Left Rail) -->
+        <aside class="catalog-left-rail" aria-label="Report Categories">
+          <nav class="catalog-nav-pills" id="catalog-category-nav">
+            <button type="button" class="catalog-rail-pill active" data-cat="all">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>All Reports</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-cat="eligibility">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Eligibility &amp; Shield</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-cat="avoidance">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Avoidance &amp; Malice</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-cat="valuation">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              <span>Valuation &amp; Estate</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (Centered independently of full-height left rail) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+            <!-- Center Column: Feed Header + Hairline-Separated Catalog Feed -->
+            <div class="catalog-main-feed">
+              <div class="catalog-feed-header">
+                <h1 id="catalog-feed-title">All Reports</h1>
+                <div class="catalog-sort-group" id="catalog-sort-group" role="group" aria-label="Filter reports">
+                  <button type="button" class="catalog-sort-btn active" data-sort="all">All</button>
+                  <button type="button" class="catalog-sort-btn" data-sort="express">24h Express</button>
+                  <button type="button" class="catalog-sort-btn" data-sort="standard">48h+</button>
+                  <button type="button" class="catalog-sort-btn" data-sort="price-asc">Fee: Low&ndash;High</button>
+                </div>
+              </div>
+
+              <div id="price-list-rows" class="catalog-feed-list" role="list"></div>
+            </div>
+
+            <!-- Right Rail: Primary CTA + Context Cards (Matches Answers .page-right-side) -->
+            <aside class="catalog-right-rail" aria-label="Statutory Desk & Popular Filings">
+              <button type="button" class="catalog-primary-cta" id="catalog-custom-request-btn">
+                <svg style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Request Custom Report</span>
+              </button>
+
+              <!-- Card 1: Desk Info & Checkout Status -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span style="text-transform:lowercase;">statutory desk</span>
+                  <span id="price-list-mode-badge" style="display:none;"></span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy">Entity-specific dossiers prepared by empanelled counsel under IBC 2016.</p>
+                  <ul class="catalog-guarantee-list">
+                    <li>Email dispatch within stated SLA</li>
+                    <li>18% GST tax invoice included</li>
+                    <li>Signed for RP / CoC / NCLT filing</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Card 2: Popular Filings (Matches Answers "Hot Questions") -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span>Popular Filings</span>
+                </div>
+                <div class="catalog-popular-list" id="catalog-popular-list">
+                  <!-- Populated from catalog in radar.js -->
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 4: Sovereign Practitioner Workspace (100% Pixel-Aligned with Catalog & Answers) -->
+    <section id="workspace-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Sovereign Practitioner Workspace">
+      <div class="catalog-shell">
+
+        <!-- Left Rail: Workspace Navigation Tabs (100% pixel-aligned with catalog left rail) -->
+        <aside class="catalog-left-rail" aria-label="Workspace Sections">
+          <nav class="catalog-nav-pills" id="workspace-rail-nav">
+            <button type="button" class="catalog-rail-pill active" data-workspace-tab="dashboard">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+              <span>bookmarks</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-workspace-tab="profile">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span>profile</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-workspace-tab="billing">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+              <span>billing</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (100% pixel-aligned with catalog) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+
+            <!-- Center Column: Active Workspace Panel -->
+            <div class="catalog-main-feed">
+
+            <!-- ─── PANEL 1: BOOKMARKS (SAVED INTERACTIONS & BRIEFINGS) ─── -->
+            <div id="workspace-panel-dashboard" class="workspace-panel">
+              <div class="catalog-feed-header">
+                <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">saved bookmarks &amp; briefings</h1>
+                <div class="catalog-sort-group" id="workspace-dashboard-filter" role="group" aria-label="Filter saved bookmarks">
+                    <button type="button" class="catalog-sort-btn active" data-filter="all">all</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="deals">deals</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="professionals">counsel</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="precedents">precedents</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="consultations">briefings</button>
+                  </div>
+                </div>
+
+                <!-- Feed of Saved Items & Consultations -->
+                <div id="workspace-dashboard-feed" class="catalog-feed-list" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Populated dynamically by radar.js -->
+                </div>
+              </div>
+
+              <!-- ─── PANEL 2: PROFILE & SECURITY & HAYAGRIVA ─── -->
+              <div id="workspace-panel-profile" class="workspace-panel" style="display:none;">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">sovereign practitioner profile</h1>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:20px;">
+                  <!-- Profile Update Notification Banner -->
+                  <div id="profile-status-banner" style="display:none;padding:12px;border-radius:8px;font-size:12px;font-family:monospace;"></div>
+
+                  <!-- 1. User Identity Details -->
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid #f1f5f9;padding-bottom:10px;">
+                      <h2 style="font-size:14px;font-weight:700;color:#0f172a;text-transform:lowercase;margin:0;">practitioner details</h2>
+                    </div>
+
+                    <form id="workspace-profile-form" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">full legal name</label>
+                        <input type="text" id="profile-name" class="fast-track-input" placeholder="Adv. Rajesh Sharma" required />
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">work email (sovereign identity)</label>
+                        <input type="email" id="profile-email" class="fast-track-input" placeholder="email@openbns.in" disabled style="background:#f1f5f9;cursor:not-allowed;" />
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">practitioner track</label>
+                        <select id="profile-track" class="fast-track-input" style="cursor:pointer;">
+                          <option value="investigator">Investigating Officer / Police</option>
+                          <option value="prosecutor">Public Prosecutor / SPP</option>
+                          <option value="advocate">Criminal Defense Counsel</option>
+                          <option value="forensic">Forensic Examiner / Cyber Expert</option>
+                          <option value="citizen">Complainant / Citizen</option>
+                          <option value="admin">Sovereign Admin</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">bar council / badge / fsl id</label>
+                        <input type="text" id="profile-registration" class="fast-track-input" placeholder="e.g. D/1042/2012 or FSL/CYB/..." />
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">organization / law chamber</label>
+                        <input type="text" id="profile-organization" class="fast-track-input" placeholder="e.g. Sharma & Associates" />
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">mobile phone / dispatch sms</label>
+                        <input type="tel" id="profile-phone" class="fast-track-input" placeholder="+91 98765 43210" />
+                      </div>
+                      <div style="grid-column:1 / -1;margin-top:6px;">
+                        <button type="submit" id="profile-save-btn" class="catalog-primary-cta" style="width:auto;padding:8px 20px;font-size:12px;text-transform:lowercase;">
+                          save profile changes
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- 2. Security & Password Change -->
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid #f1f5f9;padding-bottom:10px;">
+                      <h2 style="font-size:14px;font-weight:700;color:#0f172a;text-transform:lowercase;margin:0;">security &amp; passphrase</h2>
+                      <span style="font-size:10px;font-family:monospace;color:#64748b;">encrypted via supabase gotrue</span>
+                    </div>
+
+                    <form id="workspace-security-form" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">new passphrase (min 8 chars)</label>
+                        <input type="password" id="security-new-password" class="fast-track-input" placeholder="••••••••••••" required minlength="8" />
+                      </div>
+                      <div>
+                        <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">confirm new passphrase</label>
+                        <input type="password" id="security-confirm-password" class="fast-track-input" placeholder="••••••••••••" required minlength="8" />
+                      </div>
+                      <div style="grid-column:1 / -1;margin-top:6px;">
+                        <button type="submit" id="security-save-btn" class="fast-track-submit-btn" style="width:auto;padding:8px 20px;font-size:12px;text-transform:lowercase;">
+                          update passphrase &rarr;
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- 3. Hayagriva App & Regulatory Toolkits -->
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:12px;padding:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid #f1f5f9;padding-bottom:10px;">
+                      <div>
+                        <h2 style="font-size:14px;font-weight:700;color:#0f172a;text-transform:lowercase;margin:0;">hayagriva sovereign intelligence suite</h2>
+                        <span style="font-size:11px;color:#64748b;">local reasoning models &amp; regulatory kits under ibc 2016</span>
+                      </div>
+                      <span style="color:#059669;font-size:11px;font-weight:600;font-family:monospace;text-transform:lowercase;">online &bull; v2.4.0</span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                      <!-- Asset 1 -->
+                      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
+                        <strong style="font-size:12.5px;color:#0f172a;display:block;margin-bottom:4px;">Section 29A Inquest Protocol Checklist</strong>
+                        <p style="font-size:11px;color:#64748b;margin:0 0 10px 0;line-height:1.4;">Clauses 29A(a)-(j) disqualification audit guide &amp; connected person matrix.</p>
+                        <button type="button" class="catalog-sort-btn" onclick="alert('Downloading Section 29A Inquest Protocol Checklist (PDF)...');" style="font-size:11px;text-transform:lowercase;">download toolkit (pdf)</button>
+                      </div>
+                      <!-- Asset 2 -->
+                      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
+                        <strong style="font-size:12.5px;color:#0f172a;display:block;margin-bottom:4px;">CIRP Statutory Timeline &amp; Moratorium Matrix</strong>
+                        <p style="font-size:11px;color:#64748b;margin:0 0 10px 0;line-height:1.4;">180/270/330-day statutory milestone calculator with Essar Steel rule exclusions.</p>
+                        <button type="button" class="catalog-sort-btn" onclick="alert('Downloading CIRP Statutory Timeline Matrix (Excel)...');" style="font-size:11px;text-transform:lowercase;">download calculator (xlsx)</button>
+                      </div>
+                      <!-- Asset 3 -->
+                      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
+                        <strong style="font-size:12.5px;color:#0f172a;display:block;margin-bottom:4px;">PUFE Forensic Avoidance Matrix</strong>
+                        <p style="font-size:11px;color:#64748b;margin:0 0 10px 0;line-height:1.4;">Statutory criteria for Sections 43 (Preferential), 45 (Undervalued), 50 (Extortionate), 66 (Fraudulent).</p>
+                        <button type="button" class="catalog-sort-btn" onclick="alert('Downloading PUFE Avoidance Guide (PDF)...');" style="font-size:11px;text-transform:lowercase;">download matrix (pdf)</button>
+                      </div>
+                      <!-- Asset 4 -->
+                      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
+                        <strong style="font-size:12.5px;color:#0f172a;display:block;margin-bottom:4px;">Hayagriva Sovereign Client IDE</strong>
+                        <p style="font-size:11px;color:#64748b;margin:0 0 10px 0;line-height:1.4;">Desktop client running private local LLM reasoning models on CIRP filings.</p>
+                        <button type="button" class="catalog-sort-btn" onclick="document.getElementById('download-modal-overlay').classList.add('show');" style="font-size:11px;text-transform:lowercase;">open installer modal &rarr;</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ─── PANEL 3: BILLING & INVOICES ─── -->
+              <div id="workspace-panel-billing" class="workspace-panel" style="display:none;">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">statutory reports &amp; billing</h1>
+                  <span style="font-size:11px;font-family:monospace;color:#64748b;">razorpay &bull; gst compliant</span>
+                </div>
+
+                <!-- Billing Summary Metrics -->
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                    <span style="font-size:11px;font-family:monospace;color:#64748b;text-transform:lowercase;display:block;">active dossiers</span>
+                    <strong id="billing-active-count" style="font-size:20px;color:#0f172a;font-family:'Chakra Petch',sans-serif;">0</strong>
+                  </div>
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                    <span style="font-size:11px;font-family:monospace;color:#64748b;text-transform:lowercase;display:block;">fulfilled reports</span>
+                    <strong id="billing-fulfilled-count" style="font-size:20px;color:#059669;font-family:'Chakra Petch',sans-serif;">0</strong>
+                  </div>
+                  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;">
+                    <span style="font-size:11px;font-family:monospace;color:#64748b;text-transform:lowercase;display:block;">total fees disbursed</span>
+                    <strong id="billing-total-spend" style="font-size:20px;color:#0f172a;font-family:'Chakra Petch',sans-serif;">₹0</strong>
+                  </div>
+                </div>
+
+                <!-- Orders List Container -->
+                <div id="workspace-orders-list" class="catalog-feed-list" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Populated dynamically by radar.js from /api/user/orders -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Sovereign Identity Strip + Activity Counters + Emergency Desk -->
+            <aside class="catalog-right-rail" aria-label="Sovereign Identity Strip">
+              <!-- Practitioner Sovereign Badge Card -->
+              <div class="catalog-side-card" style="margin-bottom:12px;">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">sovereign practitioner</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                    <div id="workspace-avatar" style="width:38px;height:38px;border-radius:50%;background:#0f172a;color:white;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;">AD</div>
+                    <div>
+                      <strong id="workspace-user-name" style="font-size:13px;color:#0f172a;display:block;">Practitioner</strong>
+                      <span id="workspace-user-role" style="font-size:11px;color:#64748b;display:block;margin-top:2px;text-transform:lowercase;">insolvency counsel</span>
+                    </div>
+                  </div>
+                  <div style="font-size:11px;font-family:monospace;color:#64748b;word-break:break-all;" id="workspace-user-email">admin@openbns.in</div>
+                </div>
+              </div>
+
+              <!-- Activity Counters Card -->
+              <div class="catalog-side-card" style="margin-bottom:12px;">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">activity snapshot</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <ul class="catalog-guarantee-list" style="margin:0;">
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>saved opportunities:</span>
+                      <strong id="stat-deals-count" style="font-family:monospace;color:#0f172a;">0</strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>saved counsel &amp; ips:</span>
+                      <strong id="stat-counsel-count" style="font-family:monospace;color:#0f172a;">0</strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>saved precedents:</span>
+                      <strong id="stat-precedents-count" style="font-family:monospace;color:#0f172a;">0</strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>scheduled briefings:</span>
+                      <strong id="stat-briefings-count" style="font-family:monospace;color:#0f172a;">0</strong>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>commissioned reports:</span>
+                      <strong id="stat-orders-count" style="font-family:monospace;color:#0f172a;">0</strong>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Emergency Contact Desk Card -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">chamber assistance</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:6px;">For urgent NCLT filing or bespoke inquest commissions:</p>
+                  <a href="tel:+919316015274" class="calnode-emergency-contact" style="display:block;text-decoration:none;padding:8px 0;">
+                    <span style="color:#64748b;font-size:11px;">emergency contact:</span>
+                    <strong style="color:#059669;font-size:13px;display:block;">93160-15274 (11 am &ndash; 4 pm)</strong>
+                  </a>
+                </div>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- View 5: Sovereign Admin Console (100% Pixel-Aligned with Workspace & Catalog) -->
+    <section id="admin-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Sovereign Admin Console">
+      <div class="catalog-shell">
+
+        <!-- Left Rail: Admin Navigation Tabs -->
+        <aside class="catalog-left-rail" aria-label="Admin Console Sections">
+          <nav class="catalog-nav-pills" id="admin-rail-nav">
+            <button type="button" class="catalog-rail-pill active" data-admin-tab="overview">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span>overview</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-admin-tab="orders">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <span>orders</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-admin-tab="consultations">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+              <span>consultations</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-admin-tab="users">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>users</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (100% pixel-aligned with catalog) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+
+            <!-- Center Column: Active Admin Panel -->
+            <div class="catalog-main-feed">
+
+              <!-- ─── PANEL 1: OVERVIEW ─── -->
+              <div id="admin-panel-overview" class="admin-panel">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">sovereign platform overview</h1>
+                  <span style="font-size:11px;font-family:monospace;color:#64748b;">live operational pulse</span>
+                </div>
+
+                <!-- 4-Metric Ribbon Tiles -->
+                <div class="admin-metric-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+                  <div class="admin-metric-card" style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;text-align:left;">
+                    <span style="display:block;font-size:10px;font-family:monospace;color:#64748b;text-transform:lowercase;">gross revenue</span>
+                    <strong id="admin-stat-revenue" style="display:block;font-size:18px;font-family:'Chakra Petch',sans-serif;color:#059669;margin-top:4px;">₹0</strong>
+                  </div>
+                  <div class="admin-metric-card" style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;text-align:left;">
+                    <span style="display:block;font-size:10px;font-family:monospace;color:#64748b;text-transform:lowercase;">orders fulfilled</span>
+                    <strong id="admin-stat-orders" style="display:block;font-size:18px;font-family:'Chakra Petch',sans-serif;color:#0f172a;margin-top:4px;">0</strong>
+                  </div>
+                  <div class="admin-metric-card" style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;text-align:left;">
+                    <span style="display:block;font-size:10px;font-family:monospace;color:#64748b;text-transform:lowercase;">active briefings</span>
+                    <strong id="admin-stat-briefings" style="display:block;font-size:18px;font-family:'Chakra Petch',sans-serif;color:#0f172a;margin-top:4px;">0</strong>
+                  </div>
+                  <div class="admin-metric-card" style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;text-align:left;">
+                    <span style="display:block;font-size:10px;font-family:monospace;color:#64748b;text-transform:lowercase;">practitioners</span>
+                    <strong id="admin-stat-users" style="display:block;font-size:18px;font-family:'Chakra Petch',sans-serif;color:#0f172a;margin-top:4px;">0</strong>
+                  </div>
+                </div>
+
+                <!-- Recent Activity Feed -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:12px;padding:16px;">
+                  <h3 style="margin:0 0 12px;font-size:13px;font-weight:700;color:#0f172a;text-transform:lowercase;">recent platform activity</h3>
+                  <div id="admin-activity-list" style="display:flex;flex-direction:column;gap:10px;">
+                    <!-- Populated dynamically by radar.js -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- ─── PANEL 2: ORDERS ─── -->
+              <div id="admin-panel-orders" class="admin-panel" style="display:none;">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">statutory reports commerce</h1>
+                  <div class="catalog-sort-group" id="admin-orders-filter" role="group">
+                    <button type="button" class="catalog-sort-btn active" data-filter="all">all</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="paid">paid</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="fulfilled">fulfilled</button>
+                  </div>
+                </div>
+                <div id="admin-orders-feed" class="catalog-feed-list" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Populated dynamically by radar.js -->
+                </div>
+              </div>
+
+              <!-- ─── PANEL 3: CONSULTATIONS ─── -->
+              <div id="admin-panel-consultations" class="admin-panel" style="display:none;">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">chamber advisory briefings</h1>
+                  <div class="catalog-sort-group" id="admin-consultations-filter" role="group">
+                    <button type="button" class="catalog-sort-btn active" data-filter="all">all tracks</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="investors">investors</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="creditors">creditors</button>
+                    <button type="button" class="catalog-sort-btn" data-filter="professionals">counsel</button>
+                  </div>
+                </div>
+                <div id="admin-consultations-feed" class="catalog-feed-list" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Populated dynamically by radar.js -->
+                </div>
+              </div>
+
+              <!-- ─── PANEL 4: USERS ─── -->
+              <div id="admin-panel-users" class="admin-panel" style="display:none;">
+                <div class="catalog-feed-header">
+                  <h1 style="text-transform:lowercase;font-size:18px;font-weight:700;color:#0f172a;">verified practitioner directory</h1>
+                  <span id="admin-users-count-badge" style="font-size:11px;font-family:monospace;color:#64748b;">5 practitioners</span>
+                </div>
+                <div style="margin-bottom:14px;">
+                  <input type="text" id="admin-users-search" class="fast-track-input" placeholder="search practitioners by email, name or role..." style="width:100%;box-sizing:border-box;" />
+                </div>
+                <div id="admin-users-feed" class="catalog-feed-list" style="display:flex;flex-direction:column;gap:12px;">
+                  <!-- Populated dynamically by radar.js -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Rail: Telemetry, Admin Identity, and Quick Actions -->
+            <aside class="catalog-right-rail" aria-label="Admin Operations & Status">
+
+              <!-- Sovereign Admin Identity Card -->
+              <div class="catalog-side-card" style="margin-bottom:12px;">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">sovereign administrator</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                    <div style="width:38px;height:38px;border-radius:50%;background:#0f172a;color:#fbbf24;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:14px;border:2px solid #fbbf24;">AD</div>
+                    <div>
+                      <strong style="font-size:13px;color:#0f172a;display:block;">BNS Sovereign Admin</strong>
+                      <span style="font-size:11px;color:#64748b;display:block;margin-top:2px;text-transform:lowercase;">platform administrator</span>
+                    </div>
+                  </div>
+                  <div style="font-size:11px;font-family:monospace;color:#64748b;word-break:break-all;">admin@openbns.in</div>
+                </div>
+              </div>
+
+              <!-- Platform Telemetry Status Card -->
+              <div class="catalog-side-card" style="margin-bottom:12px;">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">platform telemetry</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <ul style="list-style:none;padding:0;margin:0;font-size:12px;color:#475569;display:flex;flex-direction:column;gap:8px;">
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>supabase postgres:</span>
+                      <span id="telemetry-db" style="font-family:monospace;font-size:11px;font-weight:700;color:#059669;">connected</span>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>calnode scheduler:</span>
+                      <span id="telemetry-calnode" style="font-family:monospace;font-size:11px;font-weight:700;color:#059669;">active (:3000)</span>
+                    </li>
+                    <li style="display:flex;justify-content:space-between;align-items:center;">
+                      <span>smtp mail relay:</span>
+                      <span id="telemetry-smtp" style="font-family:monospace;font-size:11px;font-weight:700;color:#0284c7;">simulation</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Quick Ops & Assistance Card -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span class="catalog-side-badge">chamber assistance</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:6px;">Direct emergency liaison desk:</p>
+                  <a href="tel:+919316015274" class="calnode-emergency-contact" style="display:block;text-decoration:none;padding:8px 0;">
+                    <span style="color:#64748b;font-size:11px;">emergency contact:</span>
+                    <strong style="color:#059669;font-size:13px;display:block;">93160-15274 (11 am &ndash; 4 pm)</strong>
+                  </a>
+                </div>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- View 6: Sovereign Intelligence Showcase & Demo (100% Pixel-Aligned with Catalog & Answers) -->
+    <section id="intelligence-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Sovereign Intelligence Showcase">
+      <div class="catalog-shell">
+
+        <!-- Left Rail: Intelligence Section Filters -->
+        <aside class="catalog-left-rail" aria-label="Intelligence Navigation">
+          <nav class="catalog-nav-pills" id="intel-rail-nav">
+            <button type="button" class="catalog-rail-pill active" data-intel-filter="models">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m14 9 3 3-3 3"/></svg>
+              <span>models</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-intel-filter="vaults">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M12 6v14"/></svg>
+              <span>vaults</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-intel-filter="agents">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><circle cx="5" cy="19" r="2"/><line x1="12" y1="9" x2="12" y2="3"/><line x1="14.5" y1="13.5" x2="17.5" y2="17.5"/><line x1="9.5" y1="13.5" x2="6.5" y2="17.5"/><line x1="14.5" y1="10.5" x2="17.5" y2="6.5"/><line x1="9.5" y1="10.5" x2="6.5" y2="6.5"/></svg>
+              <span>agents</span>
+            </button>
+            <button type="button" class="catalog-rail-pill" data-intel-filter="skills">
+              <svg style="width:15px;height:15px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              <span>skills</span>
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (100% pixel-aligned with catalog) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+
+            <!-- Center Column: Intelligence Showcase Feed -->
+            <div class="catalog-main-feed" id="intel-main-feed">
+
+              <!-- Hero Header -->
+              <div style="margin-bottom:24px;border-bottom:1px solid #e2e8f0;padding-bottom:18px;">
+                <div style="font-size:11px;font-family:monospace;color:#0284c7;font-weight:700;margin-bottom:6px;text-transform:lowercase;">
+                  bns / <span id="intel-crumb-domain">investigators</span> / intelligence showcase &bull; v2.4 offline harness
+                </div>
+                <h1 id="intel-page-hero-title" style="text-transform:lowercase;font-size:22px;font-weight:700;color:#0f172a;margin:0 0 8px 0;letter-spacing:-0.4px;">
+                  investor intelligence &amp; hayagriva sovereign harness
+                </h1>
+                <p id="intel-page-hero-sub" style="font-size:13px;color:#64748b;line-height:1.55;margin:0;">
+                  air-gapped statutory reasoning environment running on local hardware with zero cloud telemetry. explore domain-specific models, precedent vaults, autonomous agents, and procedural skills.
+                </p>
+              </div>
+
+              <!-- Dynamic Showcase Container (Populated by radar.js) -->
+              <div id="intel-showcase-container" style="display:flex;flex-direction:column;gap:24px;">
+                <!-- Populated dynamically by radar.js -->
+              </div>
+
+            </div>
+
+            <!-- Right Column: Sovereign Summary & Emergency Contact Rail -->
+            <aside class="catalog-right-rail" aria-label="Sovereign Harness Summary">
+
+              <!-- Card 1: Sovereign Desktop Summary -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header" style="display:flex;align-items:center;justify-content:space-between;">
+                  <span style="text-transform:lowercase;">hayagriva client</span>
+                  <span style="font-size:10px;font-family:monospace;color:#059669;font-weight:700;">v2.4.0 &bull; online</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:12px;line-height:1.45;">
+                    runs offline LLM reasoning directly inside your machine's RAM. no case files or debtor data ever touch a public cloud.
+                  </p>
+                  <button type="button" class="catalog-primary-cta" id="intel-side-download-trigger" style="width:100%;font-size:12px;padding:10px 14px;text-transform:lowercase;">
+                    download hayagriva harness &darr;
+                  </button>
+                  <div style="margin-top:10px;font-size:10.5px;color:#64748b;display:flex;align-items:center;gap:6px;">
+                    <svg style="width:13px;height:13px;color:#059669;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>dpdp act (2023) compliant &bull; air-gapped</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Statutory Emergency Contact -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span style="text-transform:lowercase;">emergency contact</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:6px;">
+                    for urgent NCLT filing or statutory support:
+                  </p>
+                  <a href="tel:+919316015274" style="text-decoration:none;display:block;font-weight:700;color:#059669;font-size:13px;letter-spacing:-0.2px;">
+                    emergency contact: 93160-15274 (11 am &ndash; 4 pm)
+                  </a>
+                </div>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- View 7: Sovereign Consultations & Advisory Docket (100% Pixel-Aligned with Catalog, Answers & Intelligence) -->
+    <section id="consultations-view" style="display:none;flex:1;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;" aria-label="Sovereign Consultations & Advisory Docket">
+      <div class="catalog-shell">
+
+        <!-- Left Rail: Advisory Tracks Navigation -->
+        <aside class="catalog-left-rail" aria-label="Consultations Navigation">
+          <nav class="catalog-nav-pills" id="consult-rail-nav">
+            <!-- Populated dynamically by radar.js per active domain -->
+          </nav>
+        </aside>
+
+        <!-- Center + Right Content Area (100% pixel-aligned with catalog) -->
+        <div class="catalog-content-area">
+          <div class="catalog-content-grid">
+
+            <!-- Center Column: Master-Detail Consultation Chamber Feed -->
+            <div class="catalog-main-feed" id="consult-main-feed">
+
+              <!-- Hero Header -->
+              <div style="margin-bottom:24px;border-bottom:1px solid #e2e8f0;padding-bottom:18px;">
+                <div style="font-size:11px;font-family:monospace;color:#059669;font-weight:700;margin-bottom:6px;text-transform:lowercase;">
+                  bns / <span id="consult-crumb-domain">investigators</span> / consultations &bull; verified statutory advisory
+                </div>
+                <h1 id="consult-page-hero-title" style="text-transform:lowercase;font-size:22px;font-weight:700;color:#0f172a;margin:0 0 8px 0;letter-spacing:-0.4px;">
+                  investor consultations &amp; statutory advisory docket
+                </h1>
+                <p id="consult-page-hero-sub" style="font-size:13px;color:#64748b;line-height:1.55;margin:0;">
+                  high-stakes legal &amp; forensic advisory sessions with ibbi-registered insolvency professionals and registered valuers. review detailed statutory scope, deliverables, and reserve live briefing slots.
+                </p>
+              </div>
+
+              <!-- Dynamic Master-Detail Container (Populated by radar.js) -->
+              <div id="consult-showcase-container" style="display:flex;flex-direction:column;gap:20px;">
+                <!-- Populated dynamically by radar.js -->
+              </div>
+
+            </div>
+
+            <!-- Right Column: Consultation Summary & Emergency Contact Rail -->
+            <aside class="catalog-right-rail" aria-label="Consultation Summary">
+
+              <!-- Card 1: Selected Briefing Summary & Quick Action -->
+              <div class="catalog-side-card" id="consult-side-summary-card">
+                <div class="catalog-side-card-header" style="display:flex;align-items:center;justify-content:space-between;">
+                  <span style="text-transform:lowercase;">selected briefing</span>
+                  <span id="consult-side-duration-badge" style="font-size:10px;font-family:monospace;color:#059669;font-weight:700;background:#ecfdf5;padding:2px 6px;border-radius:4px;border:1px solid #a7f3d0;text-transform:lowercase;">open briefing</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <h4 id="consult-side-track-title" style="font-size:13px;font-weight:700;color:#0f172a;margin:0 0 6px 0;text-transform:lowercase;line-height:1.35;">
+                    resolution plan compliance advisory
+                  </h4>
+                  <p id="consult-side-statutory-ref" style="font-size:10.5px;font-family:monospace;color:#0284c7;margin:0 0 10px 0;">
+                    section 30(2) &bull; cirp reg 38
+                  </p>
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:12px;line-height:1.45;">
+                    confidential consultation conducted over encrypted calnode bridge with statutory compliance audit memorandum.
+                  </p>
+                  <button type="button" class="catalog-primary-cta" id="consult-side-book-trigger" style="width:100%;font-size:12px;padding:10px 14px;text-transform:lowercase;">
+                    pick slot &amp; book briefing &rarr;
+                  </button>
+                  <div style="margin-top:10px;font-size:10.5px;color:#64748b;display:flex;align-items:center;gap:6px;">
+                    <svg style="width:13px;height:13px;color:#059669;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>advocate-client privilege &bull; air-gapped</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: Statutory Emergency Contact -->
+              <div class="catalog-side-card">
+                <div class="catalog-side-card-header">
+                  <span style="text-transform:lowercase;">emergency contact</span>
+                </div>
+                <div class="catalog-side-card-body">
+                  <p class="catalog-side-copy" style="font-size:12px;color:#475569;margin-bottom:6px;">
+                    for urgent NCLT filing or statutory support:
+                  </p>
+                  <a href="tel:+919316015274" style="text-decoration:none;display:block;font-weight:700;color:#059669;font-size:13px;letter-spacing:-0.2px;">
+                    emergency contact: 93160-15274 (11 am &ndash; 4 pm)
+                  </a>
+                </div>
+              </div>
+
+            </aside>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── HAYAGRIVA MULTI-OS DOWNLOAD MODAL ─── -->
+  <div class="modal-overlay" id="download-modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header-dark">
+        <button type="button" class="modal-close-btn" id="download-modal-close">&times;</button>
+        <div style="font-size:11px;font-family:monospace;color:#34d399;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;">
+          SOVEREIGN LEGAL DESKTOP &bull; ZERO CLOUD EGRESS
+        </div>
+        <h2 style="font-family:'Chakra Petch',sans-serif;font-size:24px;font-weight:700;color:white;text-transform:uppercase;">
+          Download Hayagriva IDE
+        </h2>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.5;margin-top:4px;">
+          Run local reasoning models directly in RAM on your private CIRP case documents without leaking a single byte of debtor data.
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <!-- Download Trigger Box -->
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div>
+              <strong id="dl-os-title" style="font-family:'Chakra Petch',sans-serif;font-size:15px;color:#0f172a;display:block;">
+                macOS (Apple Silicon)
+              </strong>
+              <span id="dl-os-meta" style="font-size:11px;font-family:monospace;color:#64748b;">
+                ARM64 &bull; 88.4 MB &bull; .dmg
+              </span>
+            </div>
+            <div id="countdown-badge" style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;font-size:11px;font-family:monospace;padding:4px 8px;border-radius:8px;font-weight:700;">
+              Auto-downloading in 3s
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <a href="#" id="dl-direct-btn" style="flex:1;text-align:center;background:#0f172a;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;padding:12px;border-radius:10px;text-decoration:none;">
+              Download Installer (.dmg / .exe)
+            </a>
+            <button type="button" id="dl-continue-btn" style="background:#e2e8f0;border:none;color:#475569;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:12px;padding:0 14px;border-radius:10px;cursor:pointer;">
+              Continue
+            </button>
+          </div>
+        </div>
+
+        <!-- OS Selection Grid -->
+        <div>
+          <div style="font-size:11px;font-family:'Chakra Petch',sans-serif;font-weight:700;color:#64748b;margin-bottom:8px;text-transform:uppercase;">
+            Need a different operating system?
+          </div>
+          <div class="binary-grid" id="binary-grid">
+            <!-- Populated by radar.js -->
+          </div>
+        </div>
+
+        <!-- Compliance Guarantee -->
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b;padding-top:8px;border-top:1px solid #f1f5f9;">
+          <svg style="width:14px;height:14px;color:#059669;flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>DPDP Act (2023) Compliant &bull; 100% On-Premise Execution &bull; Zero Cloud Telemetry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── AUTHENTICATION MODAL (LOGIN & SIGN UP) ─── -->
+  <div class="modal-overlay" id="auth-modal-overlay">
+    <div class="modal-card" style="max-width: 440px;">
+      
+      <!-- Modal Header -->
+      <div style="padding:20px 24px 16px;border-bottom:1px solid #f1f5f9;display:flex;align-items:flex-start;justify-content:space-between;">
+        <div>
+          <span style="background:#fff1f2;border:1px solid #fecdd3;color:#e11d48;font-size:10px;font-family:'Chakra Petch',sans-serif;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:lowercase;">
+            sovereign criminal justice identity
+          </span>
+          <h2 style="font-size:18px;font-weight:800;color:#0f172a;margin-top:6px;text-transform:lowercase;">
+            bns identity gateway
+          </h2>
+          <p style="font-size:12px;color:#64748b;margin-top:2px;">
+            sovereign authentication for investigating officers, prosecutors, advocates &amp; citizens.
+          </p>
+        </div>
+        <button type="button" class="modal-close-btn" id="auth-modal-close" style="color:#64748b;background:#f1f5f9;">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:20px 24px;">
+        
+        <!-- Toggle Tabs: Sign In vs Create Account -->
+        <div class="auth-toggle-bar">
+          <button type="button" class="auth-tab-btn active" id="tab-signin-btn">sign in</button>
+          <button type="button" class="auth-tab-btn" id="tab-signup-btn">create account</button>
+        </div>
+
+        <!-- ─── TAB 1: SIGN IN FORM ─── -->
+        <form id="form-signin" style="display:flex;flex-direction:column;gap:14px;">
+          <div id="signin-error" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 12px;border-radius:8px;font-size:12px;"></div>
+
+          <div>
+            <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;margin-bottom:4px;">
+              email address / bar id / badge no
+            </label>
+            <input type="email" id="signin-email" class="fast-track-input" placeholder="advocate@barcouncil.in" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+          </div>
+
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <label style="font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:lowercase;">
+                password
+              </label>
+            </div>
+            <input type="password" id="signin-password" class="fast-track-input" placeholder="••••••••••••" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+          </div>
+
+          <!-- Quick Autofill for Demo Testing -->
+          <div style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:8px 12px;">
+            <span style="font-size:10px;font-family:monospace;font-weight:700;color:#64748b;display:block;margin-bottom:6px;text-transform:lowercase;">quick demo credentials (click to autofill):</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+              <button type="button" id="fill-admin-btn" style="background:white;border:1px solid #cbd5e1;border-radius:6px;padding:3px 8px;font-size:11px;font-family:monospace;color:#0f172a;cursor:pointer;">
+                admin: admin@openbns.in
+              </button>
+              <button type="button" id="fill-sharma-btn" style="background:white;border:1px solid #cbd5e1;border-radius:6px;padding:3px 8px;font-size:11px;font-family:monospace;color:#e11d48;cursor:pointer;">
+                user: adv_sharma@openbns.in
+              </button>
+            </div>
+            <div style="font-size:10px;font-family:monospace;color:#64748b;line-height:1.4;">
+              <div>• <strong>admin:</strong> admin@openbns.in / OpenBNS@Admin2026!</div>
+              <div>• <strong>user:</strong> adv_sharma@openbns.in / Sharma@2026!</div>
+            </div>
+          </div>
+
+          <button type="submit" id="signin-submit-btn" style="width:100%;padding:12px;border-radius:10px;background:#0f172a;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <span>Sign In to Chamber</span>
+            <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </form>
+
+        <!-- ─── TAB 2: CREATE ACCOUNT FORM ─── -->
+        <form id="form-signup" style="display:none;flex-direction:column;gap:14px;">
+          <div id="signup-error" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 12px;border-radius:8px;font-size:12px;"></div>
+
+          <div>
+            <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+              Full Legal Name / Organization
+            </label>
+            <input type="text" id="signup-name" class="fast-track-input" placeholder="Adv. Rajesh Sharma" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+          </div>
+
+          <div>
+            <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+              Email Address
+            </label>
+            <input type="email" id="signup-email" class="fast-track-input" placeholder="r.sharma@ncltbar.org" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+          </div>
+
+          <div>
+            <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+              Password (Min 8 Characters)
+            </label>
+            <input type="password" id="signup-password" class="fast-track-input" placeholder="Create strong passphrase" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required minlength="8" />
+          </div>
+
+          <div>
+            <label style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+              Practitioner Track
+            </label>
+            <select id="signup-role" class="fast-track-input" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;cursor:pointer;">
+              <option value="practitioner">Insolvency Professional (IP / IRP / RP)</option>
+              <option value="advocate">Advocate / Insolvency Counsel</option>
+              <option value="valuer">Registered Valuer (IBBI)</option>
+              <option value="creditor">Financial Creditor / Bank / ARC / Fund</option>
+              <option value="investor">Strategic Investor / Resolution Applicant</option>
+            </select>
+          </div>
+
+          <button type="submit" id="signup-submit-btn" style="width:100%;padding:12px;border-radius:10px;background:#059669;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <span>Create Sovereign Identity &rarr;</span>
+          </button>
+        </form>
+
+        <!-- Compliance & Privacy Footer -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:#94a3b8;margin-top:16px;padding-top:12px;border-top:1px solid #f1f5f9;">
+          <svg style="width:12px;height:12px;color:#059669;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>End-to-End Encrypted &bull; Sovereign &bull; Apache 2.0</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── STATUTORY REPORT CHECKOUT MODAL (RAZORPAY & DEMO) ─── -->
+  <dialog id="report-checkout-modal-overlay" class="modal-card report-checkout-dialog" aria-labelledby="checkout-modal-title" closedby="any" style="max-width:540px;width:100%;border:none;border-radius:16px;padding:0;background:white;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);overflow:hidden;">
+    
+    <!-- Modal Header -->
+    <div class="modal-header-dark" style="position:relative;padding:20px 24px;background:#0f172a;">
+      <button type="button" class="modal-close-btn" id="checkout-modal-close" aria-label="Close checkout modal">&times;</button>
+      <div style="font-size:11px;font-family:monospace;color:#34d399;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;">
+        COMMISSION STATUTORY REPORT &bull; BESPOKE DOSSIER
+      </div>
+      <h2 id="checkout-modal-title" style="font-family:'Chakra Petch',sans-serif;font-size:20px;font-weight:700;color:white;text-transform:uppercase;margin:0;">
+        Order Statutory Report
+      </h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body" style="padding:20px 24px;max-height:80vh;overflow-y:auto;">
+      
+      <!-- Summary Strip: title, fee, turnaround -->
+      <div id="checkout-report-summary" class="checkout-report-summary" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+        <!-- Populated dynamically: title, fee, turnaround -->
+      </div>
+
+      <!-- Inline Error Banner -->
+      <div id="checkout-error" role="alert" aria-live="polite" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:10px 12px;border-radius:8px;font-size:12px;margin-bottom:14px;"></div>
+
+      <!-- Order Intake Form -->
+      <form id="report-checkout-form" method="post" style="display:flex;flex-direction:column;gap:14px;">
+        <input type="hidden" id="checkout-report-slug" name="report_slug" />
+
+        <div>
+          <label for="checkout-buyer-name" style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+            Full Legal Name / Commissioning Counsel *
+          </label>
+          <input type="text" id="checkout-buyer-name" name="buyer_name" class="fast-track-input" autocomplete="name" placeholder="Adv. Rajesh Sharma" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" autofocus required />
+        </div>
+
+        <div>
+          <label for="checkout-buyer-email" style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+            Work Email Address (Report Dispatched Here) *
+          </label>
+          <input type="email" id="checkout-buyer-email" name="buyer_email" class="fast-track-input" autocomplete="email" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="r.sharma@ncltbar.org" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+        </div>
+
+        <div>
+          <label for="checkout-buyer-phone" style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+            Mobile Phone / WhatsApp (Delivery Alerts) *
+          </label>
+          <input type="tel" id="checkout-buyer-phone" name="buyer_phone" class="fast-track-input" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+        </div>
+
+        <div>
+          <label for="checkout-target-entity" style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+            Target Entity (Company Name / CIN / NCLT Case No.) *
+          </label>
+          <input type="text" id="checkout-target-entity" name="target_entity" class="fast-track-input" autocomplete="organization" placeholder="e.g. Acme Infra Ltd / U12345DL2010PLC123456 / CP(IB)-101/2024" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;" required />
+        </div>
+
+        <div>
+          <label for="checkout-notes" style="display:block;font-size:11px;font-family:monospace;font-weight:700;color:#334155;text-transform:uppercase;margin-bottom:4px;">
+            Scope Notes / Specific Focus (Optional)
+          </label>
+          <textarea id="checkout-notes" name="notes" rows="2" class="fast-track-textarea" placeholder="e.g. Priority focus on forensic avoidance transactions (Sec 43/45) or CIRP valuation benchmarks" style="background:#f8fafc;border-color:#cbd5e1;color:#0f172a;resize:vertical;min-height:50px;"></textarea>
+        </div>
+
+        <button type="submit" id="checkout-submit-btn" class="buy-report-btn" style="width:100%;padding:12px;border-radius:10px;background:#059669;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+          Proceed to Payment &rarr;
+        </button>
+      </form>
+
+      <!-- Local Test / Demo Checkout Panel -->
+      <div id="checkout-demo-panel" class="checkout-demo-card" style="display:none;background:#f8fafc;border:2px dashed #f59e0b;border-radius:12px;padding:16px;margin-top:14px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="background:#fef3c7;color:#b45309;font-size:10px;font-family:'Chakra Petch',sans-serif;font-weight:700;padding:2px 8px;border-radius:999px;text-transform:uppercase;">
+            LOCAL TEST / DEMO CHECKOUT (No Razorpay keys configured)
+          </span>
+        </div>
+        <p style="font-size:12px;color:#475569;margin-bottom:12px;line-height:1.5;">
+          Razorpay test or live credentials are not set in the environment. You can simulate an instantaneous verified purchase to test end-to-end report commissioning and email dispatch.
+        </p>
+        <div id="checkout-demo-order-meta" class="checkout-demo-order-meta" style="font-size:11px;font-family:monospace;color:#1e293b;background:#ffffff;border:1px solid #e2e8f0;padding:10px;border-radius:8px;margin-bottom:14px;word-break:break-all;"></div>
+        <button type="button" id="checkout-demo-pay-btn" class="buy-report-btn" style="width:100%;padding:12px;border-radius:10px;background:#059669;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+          Simulate Successful Payment &rarr;
+        </button>
+      </div>
+
+      <!-- Paid Success Panel -->
+      <div id="checkout-success-panel" class="checkout-success-card" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:20px;text-align:center;margin-top:14px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#dcfce7;color:#16a34a;display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3 style="font-family:'Chakra Petch',sans-serif;font-size:18px;font-weight:700;color:#0f172a;margin-bottom:6px;text-transform:uppercase;">
+          Payment Verified &amp; Report Commissioned
+        </h3>
+        <p style="font-size:12px;color:#475569;line-height:1.5;margin-bottom:14px;">
+          Your order has been recorded. Empanelled statutory counsel has been assigned to prepare the statutory dossier for the target entity. A tax invoice and status receipt have been dispatched.
+        </p>
+        <div style="background:#ffffff;border:1px solid #dcfce7;border-radius:8px;padding:12px;text-align:left;font-size:11px;font-family:monospace;margin-bottom:16px;">
+          <div style="margin-bottom:4px;color:#64748b;">Order ID: <strong id="checkout-success-order-id" style="color:#0f172a;"></strong></div>
+          <div style="margin-bottom:4px;color:#64748b;">Payment ID: <strong id="checkout-success-payment-id" style="color:#0f172a;"></strong></div>
+          <div style="color:#64748b;">Recipient Email: <strong id="checkout-success-email" style="color:#059669;"></strong></div>
+        </div>
+        <p style="font-size:11px;color:#64748b;margin-bottom:14px;">
+          Delivery SLA: Within stated business hours to your inbox.
+        </p>
+        <button type="button" id="checkout-done-btn" style="width:100%;padding:10px;border-radius:8px;background:#0f172a;color:white;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;border:none;cursor:pointer;">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </dialog>
+
+  <!-- Vanilla Radar Application Script -->
+  <script src="/radar.js?v=20261112a"></script>
+
+</body>
+</html>

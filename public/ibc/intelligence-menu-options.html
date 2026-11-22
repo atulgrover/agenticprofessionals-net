@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligence Menu: Right Section Options &bull; OpenIBC Design</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .font-chakra { font-family: 'Chakra Petch', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="bg-slate-100/80 text-slate-900 p-4 sm:p-8 antialiased">
+
+  <div class="max-w-[1100px] mx-auto space-y-8">
+
+    <!-- Top Diagnostic Banner -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
+        <h1 class="text-base font-bold font-chakra text-slate-950 uppercase tracking-tight">
+          Redesigning the "Actions" Section (Chats &bull; Drafts &bull; Tasks)
+        </h1>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed max-w-3xl">
+        Currently, the <strong>Intelligence</strong> menu mirrors the exact same 3-row list on both sides: <em>Assets (brains / knowledge / skills)</em> on the left, and <em>Actions (chats / drafts / tasks)</em> on the right. 
+        Because <strong>Assets</strong> are static intellectual capital, while <strong>Actions</strong> are interactive tools and execution workflows, representing them differently creates immediate visual contrast and functional clarity.
+      </p>
+    </div>
+
+    <!-- ==================== OPTION 1: THE SOVEREIGN EXECUTION DOCK (TOP RECOMMENDATION) ==================== -->
+    <div class="bg-white border-2 border-[#0284c7] rounded-2xl p-6 shadow-md space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[10px] font-mono font-bold text-sky-800 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded uppercase">
+            Option 1 &bull; Recommended &bull; Sovereign Workspace Dock
+          </span>
+          <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+            Passive Intelligence (Left) vs Active Execution Cockpit (Right)
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            The right side is transformed into a sleek, unified tool cockpit. Each action (Chats, Drafts, Tasks) gets an interactive trigger tile, with a unified bottom portal gateway.
+          </p>
+        </div>
+        <span class="hidden sm:inline-block text-[10px] font-mono text-sky-700 bg-sky-50 border border-sky-200 px-2 py-1 rounded-full font-semibold">
+          High Contrast &bull; Active Feel
+        </span>
+      </div>
+
+      <!-- Live Mockup 1 -->
+      <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/80">
+        <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold mb-2">Live Dropdown Preview:</div>
+
+        <div class="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-5 max-w-[760px] mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+
+            <!-- Column 1: ASSETS (Standard Clean List) -->
+            <div class="space-y-2">
+              <div class="px-1 pb-2 border-b border-slate-100 flex items-center justify-between">
+                <span class="text-[11px] font-mono font-bold tracking-wider uppercase text-emerald-700">
+                  Intellectual Assets
+                </span>
+                <span class="text-[9px] font-mono text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                  Local RAM
+                </span>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/70 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    🧠
+                  </div>
+                  <div class="space-y-0.5 flex-1 min-w-0">
+                    <span class="text-[13px] font-bold text-slate-900 font-sans lowercase">brains</span>
+                    <p class="text-[11px] text-slate-500 leading-snug">Offline financial haircut structuring, enterprise solvency forecasting.</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/70 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    📖
+                  </div>
+                  <div class="space-y-0.5 flex-1 min-w-0">
+                    <span class="text-[13px] font-bold text-slate-900 font-sans lowercase">knowledge</span>
+                    <p class="text-[11px] text-slate-500 leading-snug">IBC case law library, Sec 29A judicial precedents &amp; NCLAT rulings.</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors group cursor-pointer">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/70 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    ⚙️
+                  </div>
+                  <div class="space-y-0.5 flex-1 min-w-0">
+                    <span class="text-[13px] font-bold text-slate-900 font-sans lowercase">skills</span>
+                    <p class="text-[11px] text-slate-500 leading-snug">Statutory compliance checks, liquidation value solvers &amp; distress ratios.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: ACTIVE EXECUTION DOCK (OPTION 1) -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-xl p-4 flex flex-col justify-between shadow-md border border-slate-800">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                  <span class="text-[10px] font-mono text-sky-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                    Execution Engines
+                  </span>
+                  <span class="text-[9px] font-mono text-slate-400">Hayagriva OS</span>
+                </div>
+
+                <!-- 3 Action Micro-Cards -->
+                <div class="space-y-1.5">
+                  <!-- Chat -->
+                  <a href="#" class="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-500/50 transition group block">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <div class="w-7 h-7 rounded-md bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center justify-center shrink-0 text-xs">
+                        💬
+                      </div>
+                      <div class="min-w-0">
+                        <div class="text-xs font-chakra font-bold text-white group-hover:text-sky-300 transition-colors lowercase flex items-center gap-1.5">
+                          <span>chatIBC</span>
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        </div>
+                        <div class="text-[10px] text-slate-400 truncate max-w-[200px]">Juridical counsel &amp; bench strategy</div>
+                      </div>
+                    </div>
+                    <span class="text-xs text-slate-400 group-hover:text-sky-300 font-mono font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </a>
+
+                  <!-- Drafts -->
+                  <a href="#" class="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-500/50 transition group block">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <div class="w-7 h-7 rounded-md bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center shrink-0 text-xs">
+                        📝
+                      </div>
+                      <div class="min-w-0">
+                        <div class="text-xs font-chakra font-bold text-white group-hover:text-sky-300 transition-colors lowercase">drafting studio</div>
+                        <div class="text-[10px] text-slate-400 truncate max-w-[200px]">EOI kits, Reg 38 feasibility scorecards</div>
+                      </div>
+                    </div>
+                    <span class="text-xs text-slate-400 group-hover:text-sky-300 font-mono font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </a>
+
+                  <!-- Tasks -->
+                  <a href="#" class="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-sky-500/50 transition group block">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <div class="w-7 h-7 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0 text-xs">
+                        ⚡
+                      </div>
+                      <div class="min-w-0">
+                        <div class="text-xs font-chakra font-bold text-white group-hover:text-sky-300 transition-colors lowercase">automated tasks</div>
+                        <div class="text-[10px] text-slate-400 truncate max-w-[200px]">330-day clocks, Sec 29A inquests, UDIN</div>
+                      </div>
+                    </div>
+                    <span class="text-xs text-slate-400 group-hover:text-sky-300 font-mono font-bold group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Bottom Portal Link -->
+              <div class="pt-2 border-t border-slate-800 text-[10px] font-mono text-slate-400 flex items-center justify-between">
+                <span>Autonomous Agent Desk</span>
+                <a href="https://portal.openibc.in" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                  <span>Open Portal</span>
+                  <span>&nearr;</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== OPTION 2: THE 3-STAGE LEGAL WORKFLOW PIPELINE ==================== -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[10px] font-mono font-bold text-purple-800 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded uppercase">
+            Option 2 &bull; Legal Workflow Pipeline
+          </span>
+          <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+            Structured 3-Step Execution: Inquire &rarr; Draft &rarr; Automate
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Presents Chats, Drafts, and Tasks as a continuous linear progression of legal work (Step 1 Consult &rarr; Step 2 Generate &rarr; Step 3 Automate).
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Mockup 2 -->
+      <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/80">
+        <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold mb-2">Live Dropdown Preview:</div>
+
+        <div class="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-5 max-w-[760px] mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+
+            <!-- Column 1: Assets -->
+            <div class="space-y-2">
+              <div class="px-1 pb-2 border-b border-slate-100 text-[11px] font-mono font-bold uppercase text-emerald-700">
+                Intellectual Assets
+              </div>
+              <div class="space-y-1.5 text-xs">
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="font-bold lowercase">brains</div>
+                  <div class="text-[11px] text-slate-500">Offline DCF &amp; solvency models</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="font-bold lowercase">knowledge</div>
+                  <div class="text-[11px] text-slate-500">MCA, CIBIL &amp; bench precedent library</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="font-bold lowercase">skills</div>
+                  <div class="text-[11px] text-slate-500">Section 29A audit &amp; haircut algorithms</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: 3-Stage Pipeline (Option 2) -->
+            <div class="bg-slate-50/80 border border-slate-200/90 rounded-xl p-4 flex flex-col justify-between">
+              <div>
+                <div class="px-1 pb-2 border-b border-slate-200/80 text-[11px] font-mono font-bold tracking-wider uppercase text-purple-700 flex items-center justify-between">
+                  <span>Execution Pipeline</span>
+                  <span class="text-[9px] font-mono text-slate-400">Step 1 to 3</span>
+                </div>
+
+                <div class="space-y-2 mt-2 relative">
+                  <!-- Stepper item 1 -->
+                  <div class="flex items-start gap-2.5 p-2 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-purple-300 transition">
+                    <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900 lowercase">chats &bull; strategize</div>
+                      <div class="text-[10px] text-slate-500 leading-tight">Deliberate bench arguments in chatIBC</div>
+                    </div>
+                  </div>
+
+                  <!-- Stepper item 2 -->
+                  <div class="flex items-start gap-2.5 p-2 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-purple-300 transition">
+                    <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900 lowercase">drafts &bull; generate</div>
+                      <div class="text-[10px] text-slate-500 leading-tight">Produce Section 29A petitions &amp; filings</div>
+                    </div>
+                  </div>
+
+                  <!-- Stepper item 3 -->
+                  <div class="flex items-start gap-2.5 p-2 rounded-lg bg-white border border-slate-200 shadow-2xs hover:border-purple-300 transition">
+                    <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-700 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                    <div>
+                      <div class="text-xs font-bold text-slate-900 lowercase">tasks &bull; automate</div>
+                      <div class="text-[10px] text-slate-500 leading-tight">Execute compliance timers &amp; UDIN stamping</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <a href="/forum" class="mt-2 text-center py-1.5 rounded-lg bg-slate-950 text-white font-chakra text-[11px] font-bold uppercase tracking-wider block hover:bg-slate-800 transition">
+                Launch Execution Suite &rarr;
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== OPTION 3: AGENTIC LIVE COMMAND TILES ==================== -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded uppercase">
+            Option 3 &bull; Clean Action Tiles
+          </span>
+          <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+            3 High-Affordance Horizontal Cards with Direct Action Buttons
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Keeps the light background, but instead of passive text, gives each item (chats, drafts, tasks) its own crisp card with a dedicated micro-button (`[ Ask → ]`, `[ Draft → ]`, `[ Run → ]`).
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Mockup 3 -->
+      <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/80">
+        <div class="text-[11px] font-mono text-slate-400 uppercase font-semibold mb-2">Live Dropdown Preview:</div>
+
+        <div class="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-5 max-w-[760px] mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+
+            <!-- Column 1: Assets -->
+            <div class="space-y-2">
+              <div class="px-1 pb-2 border-b border-slate-100 text-[11px] font-mono font-bold uppercase text-emerald-700">
+                Intellectual Assets
+              </div>
+              <div class="space-y-1 text-xs">
+                <div class="p-2.5 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                  <div class="font-bold lowercase">brains</div>
+                  <div class="text-[11px] text-slate-500">Offline DCF &amp; solvency models in RAM</div>
+                </div>
+                <div class="p-2.5 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                  <div class="font-bold lowercase">knowledge</div>
+                  <div class="text-[11px] text-slate-500">MCA, CIBIL &amp; bench precedent library</div>
+                </div>
+                <div class="p-2.5 rounded-xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                  <div class="font-bold lowercase">skills</div>
+                  <div class="text-[11px] text-slate-500">Section 29A audit &amp; haircut algorithms</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Action Cards with Micro-Buttons -->
+            <div class="space-y-2">
+              <div class="px-1 pb-2 border-b border-slate-100 text-[11px] font-mono font-bold uppercase text-[#0284c7]">
+                Actions
+              </div>
+
+              <div class="space-y-2">
+                <!-- Chats -->
+                <div class="p-2.5 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white hover:shadow-xs transition flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-900 lowercase">chats</div>
+                    <div class="text-[10px] text-slate-500 truncate max-w-[210px]">Real-time NCLT &amp; CIRP argumentation</div>
+                  </div>
+                  <a href="/forum" class="px-2.5 py-1 rounded-md bg-white border border-slate-300 text-slate-800 text-[10px] font-mono font-bold hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 transition shrink-0">
+                    Ask &rarr;
+                  </a>
+                </div>
+
+                <!-- Drafts -->
+                <div class="p-2.5 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white hover:shadow-xs transition flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-900 lowercase">drafts</div>
+                    <div class="text-[10px] text-slate-500 truncate max-w-[210px]">Petitions, Form H &amp; avoidance filings</div>
+                  </div>
+                  <a href="/udin" class="px-2.5 py-1 rounded-md bg-white border border-slate-300 text-slate-800 text-[10px] font-mono font-bold hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 transition shrink-0">
+                    Draft &rarr;
+                  </a>
+                </div>
+
+                <!-- Tasks -->
+                <div class="p-2.5 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-white hover:shadow-xs transition flex items-center justify-between gap-3">
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-900 lowercase">tasks</div>
+                    <div class="text-[10px] text-slate-500 truncate max-w-[210px]">Statutory clocks &amp; UDIN stamping</div>
+                  </div>
+                  <a href="/udin" class="px-2.5 py-1 rounded-md bg-white border border-slate-300 text-slate-800 text-[10px] font-mono font-bold hover:bg-sky-50 hover:text-sky-700 hover:border-sky-300 transition shrink-0">
+                    Run &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
+

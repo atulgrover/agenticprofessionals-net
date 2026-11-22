@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Better Header Icons for OpenIBC &bull; Architectural & Design Proposals</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .font-chakra { font-family: 'Chakra Petch', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .has-tooltip { position: relative; }
+    .tooltip-content {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+      white-space: nowrap;
+    }
+    .has-tooltip:hover .tooltip-content {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body class="bg-slate-100/70 text-slate-900 p-4 sm:p-8 antialiased">
+
+  <div class="max-w-[1000px] mx-auto space-y-8">
+
+    <!-- Header Explanation -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+        <h1 class="text-base font-bold font-chakra text-slate-950 uppercase tracking-tight">
+          Icon Evolution: Elevating from "Consumer Cartoon" to "Institutional Legal-Tech"
+        </h1>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed max-w-3xl">
+        Why the icons in your screenshot need improvement: OpenIBC serves <strong>Insolvency Resolution Professionals (IPs), NCLT Advocates, Bank GMs (Creditors), and Private Equity funds</strong>. A cartoon toy robot and food-delivery street map feel gimmicky. Below are <strong>3 bespoke icon suites</strong> engineered specifically for high-stakes institutional finance and law.
+      </p>
+    </div>
+
+    <!-- Critique Comparison Box -->
+    <div class="bg-amber-50/60 border border-amber-200 rounded-2xl p-5 text-xs text-amber-900 space-y-3">
+      <div class="font-bold font-chakra uppercase text-amber-800 flex items-center gap-2">
+        <span>⚠️ Critique of the Consumer Screenshot:</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] leading-relaxed">
+        <div class="bg-white/80 p-3 rounded-xl border border-amber-200/70">
+          <strong class="text-slate-900 block mb-1">1. Cartoon Robot Face:</strong>
+          Looks like an e-commerce customer support bot or a toy widget. Lacks the gravitas and intellectual weight of an <em>AI Legal Counsel</em> analyzing IBC Sec 29A or CIRP jurisprudence.
+        </div>
+        <div class="bg-white/80 p-3 rounded-xl border border-amber-200/70">
+          <strong class="text-slate-900 block mb-1">2. Lawn / Street Map:</strong>
+          The green patches and roads look like Uber/Google Maps neighborhood directions. It fails to convey an <em>institutional radar of 16 NCLT Judicial Benches and Pan-India Insolvency Chambers</em>.
+        </div>
+        <div class="bg-white/80 p-3 rounded-xl border border-amber-200/70">
+          <strong class="text-slate-900 block mb-1">3. Generic Ingest Tray:</strong>
+          A flat downward arrow into a tray is an icon from 1995 email clients. It doesn't communicate entering the <em>Hayagriva Sovereign Workspace / Portal / Cryptographic Terminal</em>.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SUITE 1: THE INSTITUTIONAL SOVEREIGN SET (TOP RECOMMENDATION) ==================== -->
+    <div class="bg-white border-2 border-emerald-500/80 rounded-2xl p-6 shadow-md space-y-4 relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+        Top Recommendation &bull; Sovereign Legal-Tech
+      </div>
+
+      <div class="border-b border-slate-100 pb-3">
+        <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded uppercase">
+          Suite 1 &bull; The Institutional Sovereign Suite
+        </span>
+        <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+          Neural Counsel Shield + Pan-India Bench Radar + Sovereign Gateway Dock
+        </h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Designed for NCLT courtrooms, institutional banks, and top tier chambers. Clean, dignified, razor-sharp 2px geometry.
+        </p>
+      </div>
+
+      <!-- Live Mockup Bar 1 -->
+      <div class="h-[62px] bg-white border border-slate-200 rounded-xl px-5 flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2 font-chakra font-bold text-slate-900 text-sm">
+          <span>openIBC - creditors</span>
+          <span class="text-slate-400 text-xs">⌄</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4 text-xs font-chakra lowercase text-slate-500">
+          <span class="text-slate-900 font-semibold">creditor opportunities</span>
+          <span>creditor intelligence ⌄</span>
+          <span>creditor consultations ⌄</span>
+        </div>
+
+        <!-- 3 Icons (Suite 1) -->
+        <div class="flex items-center gap-2 shrink-0">
+          
+          <!-- Icon 1: Neural Counsel Shield -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200/90 hover:border-slate-300 text-slate-800 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Neural Counsel Bubble with Legal Shield & Live Emerald Pulse -->
+              <svg class="w-5 h-5 text-slate-800 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                <!-- Centered AI Spark / Legal Intellect -->
+                <path d="M12 7.5v3M10.5 9h3" stroke="#0284c7" stroke-width="2"/>
+                <circle cx="12" cy="14" r="1.5" fill="currentColor"/>
+              </svg>
+              <!-- Live Green Dot -->
+              <span class="absolute top-1.5 right-1.5 flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 ring-1.5 ring-white"></span>
+              </span>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+              <span>chatIBC &bull; AI Legal Counsel</span>
+            </div>
+          </div>
+
+          <!-- Icon 2: Pan-India Bench Radar -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-full bg-slate-50 hover:bg-sky-50 border border-slate-200/90 hover:border-sky-300 text-slate-800 hover:text-sky-700 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Pan-India Bench Radar Pin with Concentric Scan Rings -->
+              <svg class="w-5 h-5 text-slate-800 group-hover:text-sky-700 group-hover:scale-105 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Concentric Jurisdiction Radar Arc -->
+                <path d="M4 10a8 8 0 0 1 16 0" stroke-dasharray="2 2" class="opacity-60 text-sky-600"/>
+                <!-- Bench Pillar / Chamber Pin -->
+                <path d="M12 21s-6-5.5-6-10.5A6 6 0 0 1 18 10.5c0 5-6 10.5-6 10.5z"/>
+                <!-- Pillar Capital / Core -->
+                <circle cx="12" cy="10.5" r="2" fill="currentColor"/>
+              </svg>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>Professionals Map &bull; 16 NCLT Benches</span>
+            </div>
+          </div>
+
+          <!-- Icon 3: Sovereign Gateway Dock -->
+          <div class="has-tooltip">
+            <a href="https://portal.openibc.in" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200/90 hover:border-emerald-300 text-slate-800 hover:text-emerald-700 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Dimensional Workspace Gateway & Inbound Chevron -->
+              <svg class="w-5 h-5 text-slate-800 group-hover:text-emerald-700 group-hover:scale-105 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Portal Workspace Aperture (Open Terminal) -->
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/>
+                <!-- Sovereign Enter / Inbound Arrow -->
+                <path d="M12 3v11"/>
+                <path d="m8 10 4 4 4-4"/>
+              </svg>
+            </a>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1">
+              <span>Hayagriva Portal &bull; portal.openibc.in</span>
+              <span class="text-emerald-400">&nearr;</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== SUITE 2: THE MODERN TERMINAL / FINTECH SUITE ==================== -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <span class="text-xs font-mono font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded uppercase">
+          Suite 2 &bull; The Precision Terminal Suite (Linear / Bloomberg Style)
+        </span>
+        <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+          AI Copilot Prompt (`>_`) + Geographic Grid Lattice + Cloud Workspace Terminal
+        </h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Ultra-minimalist, sleek, high-contrast monospace aesthetics. Perfect for modern fintech &amp; distressed debt funds.
+        </p>
+      </div>
+
+      <!-- Live Mockup Bar 2 -->
+      <div class="h-[62px] bg-white border border-slate-200 rounded-xl px-5 flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2 font-chakra font-bold text-slate-900 text-sm">
+          <span>openIBC - investors</span>
+          <span class="text-slate-400 text-xs">⌄</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4 text-xs font-chakra lowercase text-slate-500">
+          <span class="text-slate-900 font-semibold">investor opportunities</span>
+          <span>investor intelligence ⌄</span>
+          <span>investor consultations ⌄</span>
+        </div>
+
+        <!-- 3 Icons (Suite 2) -->
+        <div class="flex items-center gap-2 shrink-0">
+          
+          <!-- Icon 1: AI Copilot Prompt -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-xl bg-slate-900 text-white hover:bg-slate-800 border border-slate-800 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Terminal Prompt with Spark -->
+              <svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" y1="19" x2="20" y2="19"/>
+              </svg>
+              <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-400"></span>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>chatIBC &bull; AI Terminal</span>
+            </div>
+          </div>
+
+          <!-- Icon 2: Geographic Grid Lattice -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Isometric Cross-Bench Network Map -->
+              <svg class="w-4 h-4 text-slate-800 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800">
+              <span>Professionals Map &bull; NCLT Lattice</span>
+            </div>
+          </div>
+
+          <!-- Icon 3: Cloud Workspace Terminal -->
+          <div class="has-tooltip">
+            <a href="https://portal.openibc.in" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-50 hover:bg-sky-50 border border-slate-200 hover:border-sky-300 text-slate-800 hover:text-sky-700 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Workspace App Gateway -->
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M3 9h18"/>
+                <path d="m14 14 3-3m0 0-3-3m3 3H9"/>
+              </svg>
+            </a>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1">
+              <span>Hayagriva Workspace</span>
+              <span class="text-sky-400">&nearr;</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ==================== SUITE 3: THE ELEVATED EMBODIMENT (REFINING YOUR IMAGE) ==================== -->
+    <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <span class="text-xs font-mono font-bold text-purple-700 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded uppercase">
+          Suite 3 &bull; The Elevated Embodiment (Refining your image)
+        </span>
+        <h2 class="text-sm font-bold text-slate-900 mt-1 font-chakra">
+          Statutory Co-Counsel + GIS Chambers Grid + Sovereign Vault Ingest
+        </h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Takes the core idea of your image (Bot + Map + Ingest) and strips away the childish cartoon aesthetics, replacing them with sharp, professional linework and authoritative proportions.
+        </p>
+      </div>
+
+      <!-- Live Mockup Bar 3 -->
+      <div class="h-[62px] bg-white border border-slate-200 rounded-xl px-5 flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2 font-chakra font-bold text-slate-900 text-sm">
+          <span>openIBC - professionals</span>
+          <span class="text-slate-400 text-xs">⌄</span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4 text-xs font-chakra lowercase text-slate-500">
+          <span class="text-slate-900 font-semibold">professional opportunities</span>
+          <span>professional intelligence ⌄</span>
+          <span>professional consultations ⌄</span>
+        </div>
+
+        <!-- 3 Icons (Suite 3) -->
+        <div class="flex items-center gap-2 shrink-0">
+          
+          <!-- Icon 1: Elevated Co-Counsel -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Clean Headphone/Counsel Visor within Chat Frame -->
+              <svg class="w-5 h-5 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="12" rx="3"/>
+                <path d="M12 16v4"/>
+                <path d="M8 20h8"/>
+                <circle cx="9" cy="10" r="1" fill="currentColor"/>
+                <circle cx="15" cy="10" r="1" fill="currentColor"/>
+                <path d="M11 13h2"/>
+              </svg>
+              <span class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>chatIBC &bull; Co-Counsel</span>
+            </div>
+          </div>
+
+          <!-- Icon 2: GIS Chambers Grid -->
+          <div class="has-tooltip">
+            <button class="w-10 h-10 rounded-full bg-slate-50 hover:bg-sky-50 border border-slate-200 hover:border-sky-300 text-slate-800 hover:text-sky-700 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Map Fold with Raised Pin -->
+              <svg class="w-5 h-5 text-slate-800 group-hover:text-sky-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                <line x1="9" x2="9" y1="3" y2="18"/>
+                <line x1="15" x2="15" y1="6" y2="21"/>
+                <circle cx="12" cy="10" r="1.5" fill="#0284c7" stroke="#0284c7"/>
+              </svg>
+            </button>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800">
+              <span>Professionals Map &bull; Chambers Fold</span>
+            </div>
+          </div>
+
+          <!-- Icon 3: Sovereign Vault Ingest -->
+          <div class="has-tooltip">
+            <a href="https://portal.openibc.in" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-slate-800 hover:text-emerald-700 flex items-center justify-center transition cursor-pointer relative group">
+              <!-- SVG: Tray with Sovereign Arrow -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+            </a>
+            <div class="tooltip-content px-2.5 py-1 bg-slate-950 text-white text-[11px] font-mono rounded-lg shadow-lg border border-slate-800 flex items-center gap-1">
+              <span>Hayagriva Portal &bull; Ingest</span>
+              <span class="text-emerald-400">&nearr;</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary & Recommendation -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-3">
+      <h3 class="text-sm font-bold font-chakra uppercase text-slate-900">
+        Executive Verdict: Which should you choose?
+      </h3>
+      <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed">
+        <li>
+          <strong>Choose Suite 1 (Institutional Sovereign):</strong> If your goal is to look like <em>Bloomberg Law, Harvey AI, or an official institutional NCLT terminal</em>. It commands respect from bank GMs and senior advocates.
+        </li>
+        <li>
+          <strong>Choose Suite 3 (Elevated Embodiment):</strong> If you liked the playful warmth of your screenshot, but want it polished so that senior advocates don't find it gimmicky or childish.
+        </li>
+        <li>
+          <strong>Choose Suite 2 (Modern Terminal):</strong> If OpenIBC wants to position itself as a high-speed quantitative/fintech intelligence engine (like Linear or Stripe).
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Binaries & build artifacts
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Environments & credentials
+.env
+.env.local
+.env.*.local
+
+# Logs & PIDs
+logs/
+*.log
+.pids/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
