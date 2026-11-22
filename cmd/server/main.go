@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/atulgrover/agenticprofessionals-net/internal/bns"
@@ -22,17 +23,58 @@ type MultiHostRouter struct {
 }
 
 func (m *MultiHostRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// 1. Direct portal path switchers: /bns, /ibc, /home
+	switch r.URL.Path {
+	case "/bns", "/bns/":
+		http.SetCookie(w, &http.Cookie{
+			Name:     "ap_portal",
+			Value:    "bns",
+			Path:     "/",
+			MaxAge:   86400 * 30, // 30 days
+			SameSite: http.SameSiteLaxMode,
+		})
+		http.Redirect(w, r, "/", http.StatusFound)
+		return
+	case "/ibc", "/ibc/":
+		http.SetCookie(w, &http.Cookie{
+			Name:     "ap_portal",
+			Value:    "ibc",
+			Path:     "/",
+			MaxAge:   86400 * 30,
+			SameSite: http.SameSiteLaxMode,
+		})
+		http.Redirect(w, r, "/", http.StatusFound)
+		return
+	case "/home", "/home/":
+		http.SetCookie(w, &http.Cookie{
+			Name:     "ap_portal",
+			Value:    "home",
+			Path:     "/",
+			MaxAge:   86400 * 30,
+			SameSite: http.SameSiteLaxMode,
+		})
+		http.Redirect(w, r, "/", http.StatusFound)
+		return
+	}
+
 	host := r.Host
 	if h, _, err := net.SplitHostPort(host); err == nil {
 		host = h
 	}
 
-	// 1. URL Query parameter override for easy debugging (?domain=ibc or ?domain=bns)
+	// 2. URL Query parameter override (?domain=ibc or ?domain=bns or ?domain=home)
 	if q := r.URL.Query().Get("domain"); q != "" {
+		http.SetCookie(w, &http.Cookie{
+			Name:     "ap_portal",
+			Value:    q,
+			Path:     "/",
+			MaxAge:   86400 * 30,
+			SameSite: http.SameSiteLaxMode,
+		})
 		host = q
 	}
 
-	// 2. Reverse proxy / cloud header inspection
+	// 3. Reverse proxy / cloud header inspection
 	if xh := r.Header.Get("X-Forwarded-Host"); xh != "" {
 		if h, _, err := net.SplitHostPort(xh); err == nil {
 			host = h
@@ -46,7 +88,15 @@ func (m *MultiHostRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	host = strings.ToLower(host)
 
-	// 3. Domain Dispatch:
+	// 4. If host is not an explicit subdomain, check cookie preference
+	isExplicitSubdomain := strings.HasPrefix(host, "ibc.") || strings.HasPrefix(host, "bns.") || host == "ibc" || host == "bns"
+	if !isExplicitSubdomain {
+		if c, err := r.Cookie("ap_portal"); err == nil && c.Value != "" {
+			host = c.Value
+		}
+	}
+
+	// 5. Domain Dispatch:
 	// - ibc.agenticprofessionals.net / ibc.* -> IBC Practice Hub
 	// - bns.agenticprofessionals.net / bns.* -> BNS Criminal Law Hub
 	// - agenticprofessionals.net / www.* / fallback -> Root Gateway
@@ -60,6 +110,25 @@ func (m *MultiHostRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func resolveStaticDir(rel string) string {
+	if _, err := os.Stat(rel); err == nil {
+		return rel
+	}
+	exe, err := os.Executable()
+	if err == nil {
+		dir := filepath.Dir(exe)
+		cand := filepath.Join(dir, "..", rel)
+		if _, err := os.Stat(cand); err == nil {
+			return cand
+		}
+		cand2 := filepath.Join(dir, rel)
+		if _, err := os.Stat(cand2); err == nil {
+			return cand2
+		}
+	}
+	return rel
+}
+
 func main() {
 	shared.LoadDotEnvIfPresent(".env")
 
@@ -71,9 +140,9 @@ func main() {
 	}()
 
 	// Instantiate Domain Handlers
-	homeHandler := home.NewRouter(db, "public/home")
-	ibcHandler := ibc.NewRouter(db, "public/ibc")
-	bnsHandler := bns.NewRouter(db, "public/bns")
+	homeHandler := home.NewRouter(db, resolveStaticDir("public/home"))
+	ibcHandler := ibc.NewRouter(db, resolveStaticDir("public/ibc"))
+	bnsHandler := bns.NewRouter(db, resolveStaticDir("public/bns"))
 
 	masterRouter := &MultiHostRouter{
 		home: homeHandler,
