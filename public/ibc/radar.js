@@ -5115,7 +5115,7 @@
             dbTelemetry.style.color = data.telemetry.db === 'ok' ? '#059669' : '#b45309';
           }
           if (calnodeTelemetry) {
-            calnodeTelemetry.textContent = 'active (:3000)';
+            calnodeTelemetry.textContent = 'active (online)';
             calnodeTelemetry.style.color = '#059669';
           }
           if (smtpTelemetry) {
