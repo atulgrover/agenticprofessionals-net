@@ -35,6 +35,242 @@ type Space struct {
 	BookingURL    string  `json:"bookingUrl"`
 }
 
+// Professional represents a registered practitioner across all roles/cohorts.
+type Professional struct {
+	ID             string  `json:"id"`
+	Slug           string  `json:"slug"`
+	Name           string  `json:"name"`
+	Role           string  `json:"role"` // "ip", "advocate", "cyber_specialist", "valuer", "arbitrator", "researcher", "learner"
+	Designation    string  `json:"designation"`
+	RegNo          string  `json:"regNo"`
+	Firm           string  `json:"firm"`
+	Bench          string  `json:"bench"`
+	City           string  `json:"city"`
+	State          string  `json:"state"`
+	Latitude       float64 `json:"latitude"`
+	Longitude      float64 `json:"longitude"`
+	Email          string  `json:"email"`
+	Phone          string  `json:"phone"`
+	Initials       string  `json:"initials"`
+	IsVerified     bool    `json:"isVerified"`
+	Specialization string  `json:"specialization"`
+	Bio            string  `json:"bio"`
+	ActiveMandates int     `json:"activeMandates"`
+}
+
+var fallbackProfessionals = []Professional{
+	{
+		ID:             "pro-1",
+		Slug:           "sanjay-kumar-gupta",
+		Name:           "Sanjay Kumar Gupta",
+		Role:           "ip",
+		Designation:    "Insolvency Professional",
+		RegNo:          "IBBI/IPA-002/IP-N00124/2017-2018/10311",
+		Firm:           "Deloitte Touche Tohmatsu India LLP",
+		Bench:          "NCLT Ahmedabad",
+		City:           "Ahmedabad",
+		State:          "Gujarat",
+		Latitude:       23.022500,
+		Longitude:      72.571400,
+		Email:          "sgupta.ip@deloitte.com",
+		Phone:          "+91 79 6671 2000",
+		Initials:       "SG",
+		IsVerified:     true,
+		Specialization: "Heavy Industrial, Power & Utilities CIRP",
+		Bio:            "Empaneled Insolvency Professional with extensive resolution experience in heavy manufacturing, energy sector restructuring, and cross-border assets under IBC 2016.",
+		ActiveMandates: 3,
+	},
+	{
+		ID:             "pro-2",
+		Slug:           "anuj-jain",
+		Name:           "Anuj Jain",
+		Role:           "ip",
+		Designation:    "Senior Insolvency Professional",
+		RegNo:          "IBBI/IPA-001/IP-P00088/2017-2018/10184",
+		Firm:           "PricewaterhouseCoopers",
+		Bench:          "NCLT New Delhi (Principal Bench)",
+		City:           "Delhi NCR",
+		State:          "Delhi",
+		Latitude:       28.613900,
+		Longitude:      77.209000,
+		Email:          "anuj.jain.ip@pwc.com",
+		Phone:          "+91 11 4115 0000",
+		Initials:       "AJ",
+		IsVerified:     true,
+		Specialization: "Real Estate & Mega Infrastructure",
+		Bio:            "Lead Resolution Professional in landmark real estate restructuring matters with multi-lender committee coordination under CIRP regulations.",
+		ActiveMandates: 2,
+	},
+	{
+		ID:             "pro-3",
+		Slug:           "milind-kasodekar",
+		Name:           "Milind Kasodekar",
+		Role:           "ip",
+		Designation:    "Partner - Insolvency & Restructuring",
+		RegNo:          "IBBI/IPA-002/IP-N00112/2017-2018/10280",
+		Firm:           "KPMG India",
+		Bench:          "NCLT Mumbai (Court-I)",
+		City:           "Mumbai",
+		State:          "Maharashtra",
+		Latitude:       18.930400,
+		Longitude:      72.831700,
+		Email:          "mkasodekar.ip@kpmg.com",
+		Phone:          "+91 22 3090 1000",
+		Initials:       "MK",
+		IsVerified:     true,
+		Specialization: "EPC Contracting, Ports & Aviation Logistics",
+		Bio:            "Over 20 years in corporate turnaround and forensic valuation. Registered Insolvency Professional with high liquidation and resolution success rate.",
+		ActiveMandates: 4,
+	},
+	{
+		ID:             "pro-4",
+		Slug:           "adv-radhika-sharma",
+		Name:           "Adv. Radhika Sharma",
+		Role:           "advocate",
+		Designation:    "High Court Senior Advocate",
+		RegNo:          "D/1420/2012 (Bar Council of Delhi)",
+		Firm:           "Sharma & Associates Chambers",
+		Bench:          "Delhi High Court & Saket District Court",
+		City:           "Delhi NCR",
+		State:          "Delhi",
+		Latitude:       28.520400,
+		Longitude:      77.201500,
+		Email:          "radhika@sharmachambers.in",
+		Phone:          "+91 11 2651 8840",
+		Initials:       "RS",
+		IsVerified:     true,
+		Specialization: "Commercial Disputes, BNS Cyber Forensics & IBC Appeals",
+		Bio:            "Practicing Advocate representing lenders and resolution applicants before NCLAT and Supreme Court of India. Regular speaker on Agentic NSQF legal standards.",
+		ActiveMandates: 6,
+	},
+	{
+		ID:             "pro-5",
+		Slug:           "dr-vikram-aditya-nair",
+		Name:           "Dr. Vikram Aditya Nair",
+		Role:           "cyber_specialist",
+		Designation:    "Chief Cyber Forensic Analyst & BNS Specialist",
+		RegNo:          "DSCI/CE-2021/889",
+		Firm:           "National Digital Forensics Center",
+		Bench:          "Cyber Police Cells & Karnataka High Court",
+		City:           "Bengaluru",
+		State:          "Karnataka",
+		Latitude:       12.971600,
+		Longitude:      77.594600,
+		Email:          "vikram.nair@cyberjuris.org",
+		Phone:          "+91 80 4120 7765",
+		Initials:       "VN",
+		IsVerified:     true,
+		Specialization: "BNS Section 111 Organized Cyber Crime & Electronic Evidences",
+		Bio:            "Certified digital forensics expert specializing in Section 65B/BNS 2023 evidentiary compliance, sovereign LLM inference for evidence hashing, and blockchain tracing.",
+		ActiveMandates: 5,
+	},
+	{
+		ID:             "pro-6",
+		Slug:           "adv-kavita-krishnan",
+		Name:           "Adv. Kavita Krishnan",
+		Role:           "advocate",
+		Designation:    "Commercial & Appellate Counsel",
+		RegNo:          "KAR/892/2015 (Karnataka Bar Council)",
+		Firm:           "Apex Law Partners",
+		Bench:          "High Court of Karnataka (Vidhana Soudha)",
+		City:           "Bengaluru",
+		State:          "Karnataka",
+		Latitude:       12.986600,
+		Longitude:      77.597500,
+		Email:          "kavita@apexlawpartners.com",
+		Phone:          "+91 80 2221 4450",
+		Initials:       "KK",
+		IsVerified:     true,
+		Specialization: "Commercial Contracts, CPC Section 89 Mediation & Arbitration",
+		Bio:            "Senior counsel in cross-border commercial contracts and dispute resolution. Empaneled mediator with over 150 successfully settled commercial disputes.",
+		ActiveMandates: 4,
+	},
+	{
+		ID:             "pro-7",
+		Slug:           "rajesh-subramanian",
+		Name:           "Rajesh Subramanian",
+		Role:           "valuer",
+		Designation:    "Registered Valuer (Securities & Financial Assets)",
+		RegNo:          "IBBI/RV/06/2019/11045",
+		Firm:           "Sundaram & Subramanian Valuation Advisory",
+		Bench:          "NCLT Hyderabad Bench",
+		City:           "Hyderabad",
+		State:          "Telangana",
+		Latitude:       17.415600,
+		Longitude:      78.434700,
+		Email:          "rajesh.val@ssadvisory.in",
+		Phone:          "+91 40 2335 9901",
+		Initials:       "RS",
+		IsVerified:     true,
+		Specialization: "Liquidation Value Audits & Intangible AI Assets",
+		Bio:            "IBBI-registered valuer with over 80 statutory CIRP valuation reports submitted across NCLT benches. Pioneer in valuing algorithmic models and data pipelines.",
+		ActiveMandates: 7,
+	},
+	{
+		ID:             "pro-8",
+		Slug:           "prof-arundhati-sen",
+		Name:           "Prof. Arundhati Sen",
+		Role:           "researcher",
+		Designation:    "Chair Professor & Computational Law Researcher",
+		RegNo:          "NUJS/FAC/2018/042",
+		Firm:           "WBNUJS Legal Informatics Center",
+		Bench:          "Calcutta High Court Precinct",
+		City:           "Kolkata",
+		State:          "West Bengal",
+		Latitude:       22.570100,
+		Longitude:      88.406700,
+		Email:          "asen@nujs.edu",
+		Phone:          "+91 33 2335 7379",
+		Initials:       "AS",
+		IsVerified:     true,
+		Specialization: "Agentic NSQF Curriculum & Legal Knowledge Graphs",
+		Bio:            "Principal investigator on legal ontologies, judicial decision prediction models, and statutory graph reasoning frameworks for Indian law.",
+		ActiveMandates: 2,
+	},
+	{
+		ID:             "pro-9",
+		Slug:           "adv-harpreet-singh",
+		Name:           "Adv. Harpreet Singh",
+		Role:           "advocate",
+		Designation:    "Criminal Jurisprudence Counsel",
+		RegNo:          "PH/3421/2011",
+		Firm:           "Capitol Chambers",
+		Bench:          "Punjab & Haryana High Court",
+		City:           "Chandigarh",
+		State:          "Punjab & Haryana",
+		Latitude:       30.758900,
+		Longitude:      76.804900,
+		Email:          "harpreet@capitolchambers.law",
+		Phone:          "+91 172 274 0012",
+		Initials:       "HS",
+		IsVerified:     true,
+		Specialization: "BNS 2023 Statutory Transition & Appellate Defense",
+		Bio:            "Trial lawyer and author of comparative commentaries between IPC and Bharatiya Nyaya Sanhita (BNS 2023). Regular counsel before the High Court.",
+		ActiveMandates: 5,
+	},
+	{
+		ID:             "pro-10",
+		Slug:           "tanya-mehta",
+		Name:           "Tanya Mehta",
+		Role:           "learner",
+		Designation:    "Agentic AI Apprentice & Law Scholar",
+		RegNo:          "NLSIU/LLB-AI/2024/019",
+		Firm:           "National Law School of India University",
+		Bench:          "NLSIU AI Commons",
+		City:           "Bengaluru",
+		State:          "Karnataka",
+		Latitude:       12.955800,
+		Longitude:      77.512600,
+		Email:          "tanya.mehta@nlsiu.ac.in",
+		Phone:          "+91 80 2316 0532",
+		Initials:       "TM",
+		IsVerified:     true,
+		Specialization: "Prompt Engineering for Legal Discovery & NSQF L7.0",
+		Bio:            "Graduate researcher in agentic workflows, multi-agent arbitration simulations, and air-gapped legal assistance tools.",
+		ActiveMandates: 1,
+	},
+}
+
 var fallbackSpaces = []Space{
 	// ─── 8 WORK-FROM-CAFES ───
 	{
@@ -387,7 +623,7 @@ func querySpacesFromDB(db *sql.DB, spaceType string) []Space {
 	var rows *sql.Rows
 	var err error
 
-	if spaceType != "" {
+	if spaceType != "" && !strings.EqualFold(spaceType, "all") {
 		query += " AND type = $1 ORDER BY id ASC;"
 		rows, err = db.Query(query, spaceType)
 	} else {
@@ -425,13 +661,89 @@ func querySpacesFromDB(db *sql.DB, spaceType string) []Space {
 }
 
 func filterFallbackSpaces(spaceType string) []Space {
-	if spaceType == "" {
+	if spaceType == "" || strings.EqualFold(spaceType, "all") {
 		return fallbackSpaces
 	}
 	var filtered []Space
 	for _, s := range fallbackSpaces {
 		if strings.EqualFold(s.Type, spaceType) {
 			filtered = append(filtered, s)
+		}
+	}
+	return filtered
+}
+
+// queryProfessionalsFromDB attempts to fetch registered professionals from PostgreSQL, falling back to static seeds.
+func queryProfessionalsFromDB(db *sql.DB, role string) []Professional {
+	if db == nil {
+		return filterFallbackProfessionals(role)
+	}
+
+	query := `
+		SELECT 
+			id, slug, name, role, designation,
+			COALESCE(reg_no, '') as reg_no,
+			COALESCE(firm, '') as firm,
+			COALESCE(bench, '') as bench,
+			city, COALESCE(state, '') as state,
+			latitude, longitude,
+			COALESCE(email, '') as email,
+			COALESCE(phone, '') as phone,
+			COALESCE(initials, '') as initials,
+			is_verified,
+			COALESCE(specialization, '') as specialization,
+			COALESCE(bio, '') as bio,
+			COALESCE(active_mandates, 1) as active_mandates
+		FROM agentic_professionals
+	`
+	var rows *sql.Rows
+	var err error
+
+	if role != "" && !strings.EqualFold(role, "all") {
+		query += " WHERE role = $1 ORDER BY id ASC;"
+		rows, err = db.Query(query, role)
+	} else {
+		query += " ORDER BY id ASC;"
+		rows, err = db.Query(query)
+	}
+
+	if err != nil {
+		log.Printf("[WARN] Error querying agentic_professionals: %v. Using fallback data.\n", err)
+		return filterFallbackProfessionals(role)
+	}
+	defer rows.Close()
+
+	var pros []Professional
+	for rows.Next() {
+		var p Professional
+		if err := rows.Scan(
+			&p.ID, &p.Slug, &p.Name, &p.Role, &p.Designation,
+			&p.RegNo, &p.Firm, &p.Bench, &p.City, &p.State,
+			&p.Latitude, &p.Longitude, &p.Email, &p.Phone,
+			&p.Initials, &p.IsVerified, &p.Specialization,
+			&p.Bio, &p.ActiveMandates,
+		); err != nil {
+			log.Printf("[WARN] Scan error in agentic_professionals: %v\n", err)
+			continue
+		}
+		pros = append(pros, p)
+	}
+
+	if len(pros) == 0 {
+		return filterFallbackProfessionals(role)
+	}
+
+	return pros
+}
+
+func filterFallbackProfessionals(role string) []Professional {
+	if role == "" || strings.EqualFold(role, "all") {
+		return fallbackProfessionals
+	}
+	var filtered []Professional
+	for _, p := range fallbackProfessionals {
+		if strings.EqualFold(p.Role, role) {
+			filtered = append(filtered, p)
 		}
 	}
 	return filtered
@@ -520,6 +832,19 @@ func NewRouter(db *sql.DB, staticDir string) http.Handler {
 		w.Header().Set("Content-Type", "application/json")
 		libs := querySpacesFromDB(db, "library")
 		json.NewEncoder(w).Encode(map[string]any{"libraries": libs, "spaces": libs})
+	})
+
+	// ─── RADAR PROFESSIONALS ENDPOINT ───
+	mux.HandleFunc("/api/radar/professionals", func(w http.ResponseWriter, r *http.Request) {
+		shared.EnableCORS(w)
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		role := strings.ToLower(r.URL.Query().Get("role"))
+		pros := queryProfessionalsFromDB(db, role)
+		json.NewEncoder(w).Encode(map[string]any{"professionals": pros})
 	})
 
 	// Serve root static files
