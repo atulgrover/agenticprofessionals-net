@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -1388,16 +1389,27 @@ func NewRouter(db *sql.DB, staticDir string) http.Handler {
 	mux.HandleFunc("/answers/", func(w http.ResponseWriter, r *http.Request) {
 		serveAppIndex(w, r)
 	})
-
-	fs := http.FileServer(http.Dir(staticDir))
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/" || r.URL.Path == "/index.html" || r.URL.Path == "/answers" || r.URL.Path == "/answers/" {
+	mux.HandleFunc("/docs", func(w http.ResponseWriter, r *http.Request) {
+		serveAppIndex(w, r)
+	})
+	mux.HandleFunc("/docs/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/docs" || r.URL.Path == "/docs/" {
 			serveAppIndex(w, r)
 			return
 		}
-		if r.URL.Path == "/docs" || r.URL.Path == "/docs/" {
+		filePath := filepath.Join(staticDir, filepath.Clean(r.URL.Path))
+		if fi, err := os.Stat(filePath); err == nil && !fi.IsDir() {
 			setNoCache(w)
-			http.ServeFile(shared.StaticResponseWriter{ResponseWriter: w}, r, staticDir+"/docs/index.html")
+			http.ServeFile(w, r, filePath)
+			return
+		}
+		serveAppIndex(w, r)
+	})
+
+	fs := http.FileServer(http.Dir(staticDir))
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" || r.URL.Path == "/index.html" || r.URL.Path == "/answers" || r.URL.Path == "/answers/" || r.URL.Path == "/docs" || r.URL.Path == "/docs/" {
+			serveAppIndex(w, r)
 			return
 		}
 		setNoCache(w)
