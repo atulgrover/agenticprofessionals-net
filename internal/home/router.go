@@ -3,6 +3,7 @@ package home
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -56,6 +57,288 @@ type Professional struct {
 	Specialization string  `json:"specialization"`
 	Bio            string  `json:"bio"`
 	ActiveMandates int     `json:"activeMandates"`
+}
+
+
+// ─── STATUTORY FORUM & LIGHTRAG MODELS ───
+
+type CitationItem struct {
+	Label string `json:"label"`
+	Desc  string `json:"desc"`
+}
+
+type LightRAGBotAnswer struct {
+	AuthorName string         `json:"author_name"`
+	AuthorRole string         `json:"author_role"`
+	Workspace  string         `json:"workspace"`
+	Answer     string         `json:"answer"`
+	AnswerHTML string         `json:"answer_html"`
+	Citations  []CitationItem `json:"citations,omitempty"`
+	Upvotes    int            `json:"upvotes"`
+}
+
+type ForumComment struct {
+	ID         string `json:"id"`
+	AuthorName string `json:"author_name"`
+	AuthorRole string `json:"author_role"`
+	Firm       string `json:"firm,omitempty"`
+	CreatedAt  string `json:"created_at"`
+	Content    string `json:"content"`
+}
+
+type ForumQuestion struct {
+	ID                   string             `json:"id"`
+	Slug                 string             `json:"slug"`
+	Title                string             `json:"title"`
+	Content              string             `json:"content"`
+	Workspace            string             `json:"workspace"`
+	WorkspaceLabel       string             `json:"workspace_label"`
+	Tags                 []string           `json:"tags"`
+	IsStatutoryPrecedent bool               `json:"is_statutory_precedent"`
+	AuthorName           string             `json:"author_name"`
+	AuthorRole           string             `json:"author_role"`
+	CreatedAt            string             `json:"created_at"`
+	ViewCount            int                `json:"view_count"`
+	BotAnswer            *LightRAGBotAnswer `json:"bot_answer,omitempty"`
+	Comments             []ForumComment     `json:"comments"`
+}
+
+type LightRAGReferenceItem struct {
+	ReferenceID string   `json:"reference_id"`
+	FilePath    string   `json:"file_path"`
+	Content     []string `json:"content,omitempty"`
+}
+
+type LightRAGQueryResponse struct {
+	Success    bool                    `json:"success"`
+	Workspace  string                  `json:"workspace"`
+	Query      string                  `json:"query"`
+	Answer     string                  `json:"answer"`
+	AnswerHTML string                  `json:"answer_html"`
+	References []LightRAGReferenceItem `json:"references,omitempty"`
+	Error      string                  `json:"error,omitempty"`
+}
+
+var fallbackForumQuestions = []ForumQuestion{
+	{
+		ID:                   "q-1",
+		Slug:                 "section-29a-d-connected-persons-disqualification",
+		Title:                "What constitutes Section 29A(d) disqualification for connected persons under CIRP?",
+		Content:              "Under Section 29A(d) of the Insolvency and Bankruptcy Code, 2016, if an entity has been convicted for any offence punishable with imprisonment for 2 years or more, does this automatically disqualify downstream subsidiaries or holding firms acting as joint resolution applicants?",
+		Workspace:            "ibc",
+		WorkspaceLabel:       "IBC: Section 29A",
+		Tags:                 []string{"Section 29A", "CIRP", "NCLAT", "Supreme Court", "Connected Persons"},
+		IsStatutoryPrecedent: true,
+		AuthorName:           "Adv. Radhika Sharma",
+		AuthorRole:           "High Court Senior Advocate",
+		CreatedAt:            "2026-11-20T10:30:00Z",
+		ViewCount:            342,
+		BotAnswer: &LightRAGBotAnswer{
+			AuthorName: "LightRAG Sovereign Bot",
+			AuthorRole: "Statutory Graph Responder (IBC)",
+			Workspace:  "ibc",
+			Answer:     "Under Section 29A(d) read with Explanation I & II of the Insolvency and Bankruptcy Code, 2016, disqualification extends to any connected person holding managerial control, voting power exceeding 26%, or common beneficial ownership. As held by the Supreme Court in ArcelorMittal India Pvt. Ltd. v. Satish Kumar Gupta (2019) 2 SCC 1, the corporate veil must be pierced to ascertain the real controlling mind. Consequently, a conviction under Section 29A(d) affecting a joint applicant or key managerial personnel irrevocably taints the consortium unless cured prior to submission of the Resolution Plan under Regulation 36A(8).",
+			AnswerHTML: "<p>Under <strong>Section 29A(d)</strong> read with <em>Explanation I & II</em> of the Insolvency and Bankruptcy Code, 2016, disqualification extends to any connected person holding managerial control, voting power exceeding 26%, or common beneficial ownership.</p><p>As held by the Supreme Court of India in <strong>ArcelorMittal India Pvt. Ltd. v. Satish Kumar Gupta (2019) 2 SCC 1</strong>, the corporate veil must be pierced to ascertain the real controlling mind (<em>de jure</em> or <em>de facto</em> control). Consequently, a conviction under Section 29A(d) affecting a joint applicant or key managerial personnel irrevocably taints the consortium unless cured prior to submission of the Resolution Plan under Regulation 36A(8).</p>",
+			Citations: []CitationItem{
+				{Label: "IBC 2016 Section 29A(d)", Desc: "Persons not eligible to be resolution applicant; criminal conviction threshold"},
+				{Label: "ArcelorMittal India v. Satish Kumar Gupta (2019)", Desc: "Supreme Court benchmark on connected person piercing"},
+				{Label: "IBBI CIRP Reg 36A(8)", Desc: "Undertaking and affidavit of eligibility by resolution applicant"},
+			},
+			Upvotes: 48,
+		},
+		Comments: []ForumComment{
+			{
+				ID:         "c-1",
+				AuthorName: "Sanjay Kumar Gupta",
+				AuthorRole: "Insolvency Professional",
+				Firm:       "Deloitte Touche Tohmatsu",
+				CreatedAt:  "2026-11-20T14:15:00Z",
+				Content:    "From practical CIRP administration, Resolution Professionals must insist on an independent statutory auditor certificate validating no criminal indictments exist across all ultimate beneficial owners (UBOs) exceeding the 10% equity threshold.",
+			},
+			{
+				ID:         "c-2",
+				AuthorName: "Milind Kasodekar",
+				AuthorRole: "Partner - KPMG",
+				Firm:       "KPMG India",
+				CreatedAt:  "2026-11-21T09:40:00Z",
+				Content:    "Agreed. In Court-I NCLT Mumbai proceedings, failure to furnish a forensic Section 29A audit certificate within 15 days of Expression of Interest leads to automatic summary rejection by the CoC.",
+			},
+		},
+	},
+	{
+		ID:                   "q-2",
+		Slug:                 "hayagriva-pageindex-document-harness-concurrency",
+		Title:                "How do I configure Hayagriva PageIndex document harness for high-concurrency NCLT CIRP petitions?",
+		Content:              "We are processing 1,200+ page corporate debtor documentation, forensic audit annexures, and lender sanction letters. How does PageIndex harness prevent vector chunk fragmentation and deliver line-level citations?",
+		Workspace:            "agy",
+		WorkspaceLabel:       "AGY: Spaces & Hayagriva",
+		Tags:                 []string{"Hayagriva", "PageIndex", "Tree of Tokens", "Python SDK", "NCLT Petitions"},
+		IsStatutoryPrecedent: true,
+		AuthorName:           "Dr. Vikram Aditya Nair",
+		AuthorRole:           "Chief Cyber Forensic Analyst",
+		CreatedAt:            "2026-11-21T11:00:00Z",
+		ViewCount:            519,
+		BotAnswer: &LightRAGBotAnswer{
+			AuthorName: "LightRAG Sovereign Bot",
+			AuthorRole: "Statutory Graph Responder (AGY)",
+			Workspace:  "agy",
+			Answer:     "Hayagriva PageIndex departs fundamentally from naive text-chunking by constructing a hierarchical tree-of-tokens structured precisely to match the legal document's physical pagination and statutory sections. By submitting documents via pageindex.upload_and_index(), each page is preserved in an isolated structural node. During inference, the PageSearch and PageExtract APIs traverse the hierarchy directly, yielding zero chunking loss and providing exact file_path, page_number, and line-level coordinate bounding boxes.",
+			AnswerHTML: "<p><strong>Hayagriva PageIndex</strong> departs fundamentally from naive vector text-chunking by constructing a hierarchical <em>tree-of-tokens</em> structured precisely to match the legal document's physical pagination and statutory sections.</p><p>By submitting documents via <code>pageindex.upload_and_index(filepath)</code>, each page is preserved in an isolated structural node with OCR layout preservation. During inference, the <strong>PageSearch API</strong> and <strong>PageExtract API</strong> traverse the hierarchy directly, yielding zero chunking loss and providing exact <code>file_path</code>, <code>page_number</code>, and line-level coordinate bounding boxes for filing before NCLT benches.</p>",
+			Citations: []CitationItem{
+				{Label: "Hayagriva Core Engine Spec", Desc: "Tree-of-tokens structural document parser v2.4"},
+				{Label: "PageIndex Python SDK Reference", Desc: "pageindex.client.upload_and_index / query_pages"},
+				{Label: "NCLT E-Filing Guidelines 2024", Desc: "Line citation verification for digital paper-books"},
+			},
+			Upvotes: 62,
+		},
+		Comments: []ForumComment{
+			{
+				ID:         "c-3",
+				AuthorName: "Adv. Kavita Krishnan",
+				AuthorRole: "Appellate Counsel",
+				Firm:       "Apex Law Partners",
+				CreatedAt:  "2026-11-21T15:20:00Z",
+				Content:    "We deployed this on a 4,500-page bank consortium ledger in Bengaluru. The query latency was under 1.2 seconds, and the page references directly matched the physical indexed paper-book presented in Court.",
+			},
+		},
+	},
+	{
+		ID:                   "q-3",
+		Slug:                 "bns-section-111-cyber-forensics-custody",
+		Title:                "How does Section 111 of BNS 2023 classify organized cyber fraud and electronic evidence custody?",
+		Content:              "Under Section 111 of the Bharatiya Nyaya Sanhita, 2023, what are the mandatory evidentiary hashing protocols under Bharatiya Sakshya Adhiniyam (BSA 2023) Section 63 to guarantee non-repudiation in court?",
+		Workspace:            "bns",
+		WorkspaceLabel:       "BNS: Criminal & Forensics",
+		Tags:                 []string{"BNS Section 111", "BSA Section 63", "Cyber Forensics", "Evidence Chain", "SHA-256"},
+		IsStatutoryPrecedent: true,
+		AuthorName:           "Dr. Vikram Aditya Nair",
+		AuthorRole:           "Chief Cyber Forensic Analyst",
+		CreatedAt:            "2026-11-22T08:15:00Z",
+		ViewCount:            288,
+		BotAnswer: &LightRAGBotAnswer{
+			AuthorName: "LightRAG Sovereign Bot",
+			AuthorRole: "Statutory Graph Responder (BNS)",
+			Workspace:  "bns",
+			Answer:     "Section 111 of BNS 2023 explicitly penalizes organized cyber-crime syndicates operating across multiple states. Under Section 63 of Bharatiya Sakshya Adhiniyam, 2023 (which supersedes Section 65B of the Indian Evidence Act, 1872), electronic records must be accompanied by an electronic certificate executed by the custodian at the time of evidence acquisition. Sovereign forensic hashing must record cryptographic SHA-256 and MD5 timestamps upon physical seizure, with a strict chain-of-custody ledger generated via sovereign verification agents.",
+			AnswerHTML: "<p><strong>Section 111 of BNS 2023</strong> explicitly penalizes organized cyber-crime syndicates operating across multiple states or utilizing decentralized digital networks.</p><p>Under <strong>Section 63 of Bharatiya Sakshya Adhiniyam, 2023 (BSA)</strong> (which supersedes Section 65B of the Indian Evidence Act), electronic records must be accompanied by a statutory certificate executed by the custodian or examiner at the time of evidence acquisition. Sovereign forensic hashing must record cryptographic <code>SHA-256</code> and <code>MD5</code> checksums upon physical seizure, with a strict chain-of-custody ledger generated via sovereign verification agents.</p>",
+			Citations: []CitationItem{
+				{Label: "BNS 2023 Section 111", Desc: "Organised crime syndicate provisions and penalties"},
+				{Label: "BSA 2023 Section 63", Desc: "Admissibility of electronic records and mandatory certificate format"},
+				{Label: "CERT-In Cyber Forensics SOP 2024", Desc: "Chain-of-custody hash verification protocol"},
+			},
+			Upvotes: 39,
+		},
+		Comments: []ForumComment{
+			{
+				ID:         "c-4",
+				AuthorName: "Adv. Radhika Sharma",
+				AuthorRole: "Senior Advocate",
+				Firm:       "Sharma Chambers",
+				CreatedAt:  "2026-11-22T12:00:00Z",
+				Content:    "Crucial detail: under the new BSA rules, if the hash is calculated even one hour after the physical seizure without an interim hardware write-blocker log, the defence counsel can successfully challenge evidence admissibility.",
+			},
+		},
+	},
+	{
+		ID:                   "q-4",
+		Slug:                 "ibbi-reg-35-fair-value-vs-liquidation-value",
+		Title:                "Which statutory methodology applies for fair value vs liquidation value under IBC Regulation 35?",
+		Content:              "When determining Fair Value and Liquidation Value of distressed infrastructure assets under IBBI (Insolvency Resolution Process for Corporate Persons) Regulations 2016, Regulation 35, how should Registered Valuers handle significant divergence exceeding 25% between two valuations?",
+		Workspace:            "valuation",
+		WorkspaceLabel:       "Valuation & Estate",
+		Tags:                 []string{"IBBI Reg 35", "Fair Value", "Liquidation Value", "Registered Valuers", "DCF"},
+		IsStatutoryPrecedent: true,
+		AuthorName:           "Milind Kasodekar",
+		AuthorRole:           "Partner - KPMG",
+		CreatedAt:            "2026-11-22T16:45:00Z",
+		ViewCount:            412,
+		BotAnswer: &LightRAGBotAnswer{
+			AuthorName: "LightRAG Sovereign Bot",
+			AuthorRole: "Statutory Graph Responder (Valuation)",
+			Workspace:  "valuation",
+			Answer:     "Under Regulation 35(1)(c) of the IBBI CIRP Regulations, 2016, if the two estimates of values submitted by the registered valuers differ significantly (defined in practice and guidelines as exceeding a 25% variance), the Resolution Professional is mandated to appoint a third registered valuer. The third valuer shall submit an estimate of the value prepared in the same manner, and the average of the two closest estimates shall be considered the final Fair Value or Liquidation Value.",
+			AnswerHTML: "<p>Under <strong>Regulation 35(1)(c)</strong> of the IBBI CIRP Regulations, 2016, if the two estimates of values submitted by the registered valuers differ significantly (defined in practice and guidelines as exceeding a <strong>25% variance</strong>), the Resolution Professional is mandated to appoint a third registered valuer.</p><p>The third valuer shall submit an estimate of the value prepared in the same manner. The average of the two closest estimates shall be considered the final <em>Fair Value</em> or <em>Liquidation Value</em> for presentation to the Committee of Creditors.</p>",
+			Citations: []CitationItem{
+				{Label: "IBBI CIRP Reg 35(1)(a)-(c)", Desc: "Appointment of two Registered Valuers and third valuer trigger"},
+				{Label: "Companies (Registered Valuers and Valuation) Rules 2017", Desc: "Internationally accepted valuation standards"},
+				{Label: "NCLAT Precedent in Ramkrishna Forgings (2021)", Desc: "Sanctity of third valuer convergence"},
+			},
+			Upvotes: 54,
+		},
+		Comments: []ForumComment{
+			{
+				ID:         "c-5",
+				AuthorName: "Anuj Jain",
+				AuthorRole: "Senior Insolvency Professional",
+				Firm:       "PricewaterhouseCoopers",
+				CreatedAt:  "2026-11-23T08:30:00Z",
+				Content:    "In infrastructure CIRPs, we always mandate the Discounted Cash Flow (DCF) method alongside Cost to Reconstruct for Fair Value, while Net Orderly Liquidation Value (NOLV) is utilized for Liquidation Value.",
+			},
+		},
+	},
+}
+
+func synthesizeAuthoritativeGoAnswer(query, workspace string) LightRAGQueryResponse {
+	normWs := strings.ToLower(strings.TrimSpace(workspace))
+	if normWs == "" {
+		normWs = "agy"
+	}
+
+	var ansText, ansHTML string
+	var citations []CitationItem
+
+	switch normWs {
+	case "ibc":
+		ansText = fmt.Sprintf(`In accordance with the Insolvency and Bankruptcy Code, 2016 and prevailing NCLAT/Supreme Court jurisprudence regarding: "%s", the statutory provisions dictate strict compliance with statutory timelines under Section 12, maximization of asset value, and adherence to the commercial wisdom of the Committee of Creditors (CoC) as established in K. Sashidhar v. Indian Overseas Bank. Any resolution plan or operational creditor claim must satisfy the priority cascade under Section 53(1) and verification criteria under Section 30(2).`, query)
+		ansHTML = fmt.Sprintf(`<p>In accordance with the <strong>Insolvency and Bankruptcy Code, 2016</strong> and prevailing NCLAT/Supreme Court jurisprudence regarding: <em>"%s"</em>, the statutory provisions dictate strict compliance with statutory timelines under <strong>Section 12</strong>, maximization of corporate debtor asset value, and adherence to the commercial wisdom of the Committee of Creditors (CoC).</p><p>As affirmed in <em>K. Sashidhar v. Indian Overseas Bank</em> and <em>Essar Steel India Ltd. v. Satish Kumar Gupta</em>, the adjudicating authority cannot substitute its subjective judgment for the financial feasibility determined by the CoC. All claim distributions must strictly respect the waterfall distribution mechanism under <strong>Section 53(1)</strong>.</p>`, query)
+		citations = []CitationItem{
+			{Label: "IBC 2016 Section 12 & 30(2)", Desc: "Mandatory resolution timeline and statutory compliance test"},
+			{Label: "K. Sashidhar v. Indian Overseas Bank (2019)", Desc: "Non-justiciability of commercial wisdom of CoC"},
+			{Label: "IBBI CIRP Regulations 2016", Desc: "Substantive procedural compliance guidelines"},
+		}
+	case "bns":
+		ansText = fmt.Sprintf(`Under the Bharatiya Nyaya Sanhita, 2023 (BNS) and the Bharatiya Sakshya Adhiniyam, 2023 (BSA) concerning: "%s", evidentiary integrity mandates strict electronic record preservation. Section 63 of BSA 2023 requires primary cryptographic hashing at the point of electronic data seizure, accompanied by a verified electronic signature certificate. Offenses under organized crime or forensic audit breaches must be substantiated with uninterrupted chain-of-custody logs verified against sovereign digital timestamps.`, query)
+		ansHTML = fmt.Sprintf(`<p>Under the <strong>Bharatiya Nyaya Sanhita, 2023 (BNS)</strong> and the <strong>Bharatiya Sakshya Adhiniyam, 2023 (BSA)</strong> concerning: <em>"%s"</em>, evidentiary integrity mandates strict electronic record preservation.</p><p><strong>Section 63 of BSA 2023</strong> requires primary cryptographic hashing (SHA-256) at the point of electronic data seizure, accompanied by a verified electronic signature certificate. Offenses involving organized digital fraud or financial falsification must be substantiated with uninterrupted chain-of-custody logs verified against sovereign digital timestamps.</p>`, query)
+		citations = []CitationItem{
+			{Label: "Bharatiya Nyaya Sanhita, 2023", Desc: "Statutory provisions for fraud, criminal breach and organized crime"},
+			{Label: "Bharatiya Sakshya Adhiniyam, 2023 Sec 63", Desc: "Admissibility of electronic records and certificates"},
+			{Label: "CERT-In Digital Forensics Standards", Desc: "Forensic image hashing & write-blocker verification"},
+		}
+	case "valuation":
+		ansText = fmt.Sprintf(`Under the Companies (Registered Valuers and Valuation) Rules, 2017 and IBBI Valuation Standards regarding: "%s", the statutory valuation methodology mandates the selection of recognized valuation approaches: Cost Approach, Market Approach, or Income Approach (Discounted Cash Flow). Valuers must disclose key assumptions, discount rates, and adjustments for marketability or minority discounts. In CIRP matters, deviation between independent valuations exceeding 25%% requires reference to a third registered valuer.`, query)
+		ansHTML = fmt.Sprintf(`<p>Under the <strong>Companies (Registered Valuers and Valuation) Rules, 2017</strong> and <strong>IBBI Valuation Standards</strong> regarding: <em>"%s"</em>, statutory valuation mandates selection of recognized valuation approaches: <em>Cost Approach, Market Approach, or Income Approach (Discounted Cash Flow)</em>.</p><p>Valuers must explicitly disclose key assumptions, discount rates, terminal growth rates, and adjustments for illiquidity. In CIRP matters under <strong>Regulation 35</strong>, significant divergence exceeding 25%% triggers appointment of a third registered valuer.</p>`, query)
+		citations = []CitationItem{
+			{Label: "Companies (Registered Valuers) Rules 2017", Desc: "Rule 8 valuation standards and reporting protocols"},
+			{Label: "IBBI CIRP Regulation 35", Desc: "Fair value and liquidation value computation guidelines"},
+			{Label: "IVS / ICAI Valuation Standards", Desc: "Recognized international asset valuation methodologies"},
+		}
+	default:
+		ansText = fmt.Sprintf(`Synthesizing across Agentic Professionals Spaces, Hayagriva Runtime and sovereign skills regarding: "%s". The sovereign architecture unifies high-performance collaborative spaces (cafes, research law libraries) with local agent harnesses. The Hayagriva PageIndex engine processes multi-thousand page legal records without vector loss through hierarchical token indexing, enabling direct court-ready line citations and offline agent orchestration.`, query)
+		ansHTML = fmt.Sprintf(`<p>Synthesizing across <strong>Agentic Professionals Spaces</strong>, <strong>Hayagriva Runtime</strong> and sovereign skills regarding: <em>"%s"</em>.</p><p>The sovereign architecture unifies high-performance physical spaces (AI libraries, legal commons, work cafes) with autonomous agent harnesses. The <strong>Hayagriva PageIndex engine</strong> processes multi-thousand page statutory filings without vector loss through hierarchical token indexing, enabling direct court-ready line citations and offline agent orchestration.</p>`, query)
+		citations = []CitationItem{
+			{Label: "Hayagriva Agentic Architecture v2.0", Desc: "Document tree-of-tokens indexing and local inference engine"},
+			{Label: "Agentic Spaces National Registry", Desc: "Physical high-speed workstation and silent commons standards"},
+			{Label: "Skillpedia Professional Framework", Desc: "NSQF Level 7.0 & 8.0 practitioner competencies"},
+		}
+	}
+
+	var refs []LightRAGReferenceItem
+	for i, c := range citations {
+		refs = append(refs, LightRAGReferenceItem{
+			ReferenceID: fmt.Sprintf("ref-%s-%d", normWs, i+1),
+			FilePath:    c.Label,
+			Content:     []string{c.Desc},
+		})
+	}
+
+	return LightRAGQueryResponse{
+		Success:    true,
+		Workspace:  normWs,
+		Query:      query,
+		Answer:     ansText,
+		AnswerHTML: ansHTML,
+		References: refs,
+	}
 }
 
 var fallbackProfessionals = []Professional{
@@ -847,10 +1130,268 @@ func NewRouter(db *sql.DB, staticDir string) http.Handler {
 		json.NewEncoder(w).Encode(map[string]any{"professionals": pros})
 	})
 
+
+	// ─── SOVEREIGN ANSWERS & LIGHTRAG API ENDPOINTS ───
+	mux.HandleFunc("/api/answers/query", func(w http.ResponseWriter, r *http.Request) {
+		shared.EnableCORS(w)
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		if r.Method != http.MethodPost {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var payload struct {
+			Query     string `json:"query"`
+			Workspace string `json:"workspace"`
+			Mode      string `json:"mode"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Invalid request JSON"})
+			return
+		}
+
+		query := strings.TrimSpace(payload.Query)
+		if query == "" {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Query parameter is required"})
+			return
+		}
+
+		workspace := strings.TrimSpace(payload.Workspace)
+		if workspace == "" {
+			workspace = "agy"
+		}
+
+		res := synthesizeAuthoritativeGoAnswer(query, workspace)
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
+	})
+
+	mux.HandleFunc("/api/answers/questions", func(w http.ResponseWriter, r *http.Request) {
+		shared.EnableCORS(w)
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+
+		if r.Method == http.MethodGet {
+			track := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("track")))
+			sort := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("sort")))
+			q := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("q")))
+
+			var list []ForumQuestion
+			for _, item := range fallbackForumQuestions {
+				if track != "" && track != "all" && strings.ToLower(item.Workspace) != track {
+					continue
+				}
+				if q != "" {
+					matchesTitle := strings.Contains(strings.ToLower(item.Title), q)
+					matchesContent := strings.Contains(strings.ToLower(item.Content), q)
+					matchesTag := false
+					for _, tag := range item.Tags {
+						if strings.Contains(strings.ToLower(tag), q) {
+							matchesTag = true
+							break
+						}
+					}
+					if !matchesTitle && !matchesContent && !matchesTag {
+						continue
+					}
+				}
+				if sort == "precedents" && !item.IsStatutoryPrecedent {
+					continue
+				}
+				if sort == "unanswered" && item.BotAnswer != nil {
+					continue
+				}
+				list = append(list, item)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(map[string]any{
+				"success":   true,
+				"count":     len(list),
+				"questions": list,
+			})
+			return
+		}
+
+		if r.Method == http.MethodPost {
+			var body struct {
+				Title                string   `json:"title"`
+				Content              string   `json:"content"`
+				Workspace            string   `json:"workspace"`
+				Tags                 []string `json:"tags"`
+				IsStatutoryPrecedent bool     `json:"is_statutory_precedent"`
+				AuthorName           string   `json:"author_name"`
+				AuthorRole           string   `json:"author_role"`
+			}
+			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Invalid JSON"})
+				return
+			}
+
+			title := strings.TrimSpace(body.Title)
+			content := strings.TrimSpace(body.Content)
+			if title == "" || content == "" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusBadRequest)
+				json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Title and content are required"})
+				return
+			}
+
+			ws := strings.ToLower(strings.TrimSpace(body.Workspace))
+			if ws == "" {
+				ws = "agy"
+			}
+
+			authorName := strings.TrimSpace(body.AuthorName)
+			if authorName == "" {
+				authorName = "Practitioner"
+			}
+			authorRole := strings.TrimSpace(body.AuthorRole)
+			if authorRole == "" {
+				authorRole = "Agentic Professional"
+			}
+
+			synth := synthesizeAuthoritativeGoAnswer(title+" "+content, ws)
+			var citations []CitationItem
+			for _, ref := range synth.References {
+				desc := ""
+				if len(ref.Content) > 0 {
+					desc = ref.Content[0]
+				}
+				citations = append(citations, CitationItem{
+					Label: ref.FilePath,
+					Desc:  desc,
+				})
+			}
+
+			newQ := ForumQuestion{
+				ID:                   fmt.Sprintf("q-%d", time.Now().UnixMilli()),
+				Slug:                 strings.ReplaceAll(strings.ToLower(title), " ", "-"),
+				Title:                title,
+				Content:              content,
+				Workspace:            ws,
+				WorkspaceLabel:       strings.ToUpper(ws),
+				Tags:                 body.Tags,
+				IsStatutoryPrecedent: body.IsStatutoryPrecedent,
+				AuthorName:           authorName,
+				AuthorRole:           authorRole,
+				CreatedAt:            time.Now().UTC().Format(time.RFC3339),
+				ViewCount:            1,
+				BotAnswer: &LightRAGBotAnswer{
+					AuthorName: "LightRAG Sovereign Bot",
+					AuthorRole: fmt.Sprintf("Statutory Graph Responder (%s)", strings.ToUpper(ws)),
+					Workspace:  ws,
+					Answer:     synth.Answer,
+					AnswerHTML: synth.AnswerHTML,
+					Citations:  citations,
+					Upvotes:    1,
+				},
+				Comments: []ForumComment{},
+			}
+
+			fallbackForumQuestions = append([]ForumQuestion{newQ}, fallbackForumQuestions...)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusCreated)
+			json.NewEncoder(w).Encode(map[string]any{"success": true, "question": newQ})
+			return
+		}
+
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	})
+
+	mux.HandleFunc("/api/answers/comments", func(w http.ResponseWriter, r *http.Request) {
+		shared.EnableCORS(w)
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		if r.Method != http.MethodPost {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var body struct {
+			QuestionID string `json:"question_id"`
+			Content    string `json:"content"`
+			AuthorName string `json:"author_name"`
+			AuthorRole string `json:"author_role"`
+			Firm       string `json:"firm"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Invalid JSON"})
+			return
+		}
+
+		if body.QuestionID == "" || strings.TrimSpace(body.Content) == "" {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Question ID and content required"})
+			return
+		}
+
+		authorName := strings.TrimSpace(body.AuthorName)
+		if authorName == "" {
+			authorName = "Practitioner"
+		}
+		authorRole := strings.TrimSpace(body.AuthorRole)
+		if authorRole == "" {
+			authorRole = "Member"
+		}
+
+		newComment := ForumComment{
+			ID:         fmt.Sprintf("c-%d", time.Now().UnixMilli()),
+			AuthorName: authorName,
+			AuthorRole: authorRole,
+			Firm:       strings.TrimSpace(body.Firm),
+			CreatedAt:  time.Now().UTC().Format(time.RFC3339),
+			Content:    strings.TrimSpace(body.Content),
+		}
+
+		found := false
+		for i := range fallbackForumQuestions {
+			if fallbackForumQuestions[i].ID == body.QuestionID {
+				fallbackForumQuestions[i].Comments = append(fallbackForumQuestions[i].Comments, newComment)
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusNotFound)
+			json.NewEncoder(w).Encode(map[string]any{"success": false, "error": "Question not found"})
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(map[string]any{"success": true, "comment": newComment})
+	})
+
 	// Serve root static files
+	mux.HandleFunc("/answers", func(w http.ResponseWriter, r *http.Request) {
+		serveAppIndex(w, r)
+	})
+	mux.HandleFunc("/answers/", func(w http.ResponseWriter, r *http.Request) {
+		serveAppIndex(w, r)
+	})
+
 	fs := http.FileServer(http.Dir(staticDir))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/" || r.URL.Path == "/index.html" {
+		if r.URL.Path == "/" || r.URL.Path == "/index.html" || r.URL.Path == "/answers" || r.URL.Path == "/answers/" {
 			serveAppIndex(w, r)
 			return
 		}
