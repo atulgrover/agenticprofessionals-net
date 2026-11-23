@@ -854,6 +854,11 @@ func NewRouter(db *sql.DB, staticDir string) http.Handler {
 			serveAppIndex(w, r)
 			return
 		}
+		if r.URL.Path == "/docs" || r.URL.Path == "/docs/" {
+			setNoCache(w)
+			http.ServeFile(shared.StaticResponseWriter{ResponseWriter: w}, r, staticDir+"/docs/index.html")
+			return
+		}
 		setNoCache(w)
 		fs.ServeHTTP(shared.StaticResponseWriter{ResponseWriter: w}, r)
 	})
