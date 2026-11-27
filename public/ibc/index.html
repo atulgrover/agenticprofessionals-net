@@ -133,19 +133,23 @@
           </div>
         </li>
 
+        <!-- Item 4: Query Agents (Direct Forum Link) -->
+        <li class="nav-item">
+          <button type="button" class="nav-btn" id="nav-answers-btn">query agents</button>
+        </li>
+
       </ul>
     </nav>
 
-    <!-- 3. Actions Tray (Right): answers, catalog & profile -->
+    <!-- 3. Actions Tray (Right): cart & profile -->
     <div class="actions-tray">
-      <!-- Answers (Opens Dedicated Forum View without Port Shift) -->
-      <button type="button" class="answers-nav-btn" id="nav-answers-btn">
-        <span>query agents</span>
-      </button>
-
-      <!-- Reports (Opens Dedicated Statutory Reports View) -->
-      <button type="button" class="catalog-nav-btn" id="nav-catalog-btn">
-        <span>reports</span>
+      <!-- Reports / Cart (Opens Dedicated Statutory Reports View) -->
+      <button type="button" class="catalog-nav-btn" id="nav-catalog-btn" title="purchased reports / cart" aria-label="cart" style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+          <circle cx="8" cy="21" r="1"/>
+          <circle cx="19" cy="21" r="1"/>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+        </svg>
       </button>
 
       <!-- Logged-Out User Gateway -->
