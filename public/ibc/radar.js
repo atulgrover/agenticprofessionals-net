@@ -14,11 +14,11 @@
 
   // ─── 1. COMPREHENSIVE STAKEHOLDER DICTIONARIES ───
   const SUBDOMAINS = [
-    { key: 'creditors', label: 'creditors', oppLabel: 'creditor opportunities' },
-    { key: 'professionals', label: 'professionals', oppLabel: 'professional opportunities' },
-    { key: 'valuers', label: 'valuers', oppLabel: 'valuer opportunities' },
-    { key: 'investors', label: 'investors', oppLabel: 'investor opportunities' },
-    { key: 'guarantors', label: 'guarantors', oppLabel: 'guarantor opportunities' }
+    { key: 'creditors', label: 'creditors', oppLabel: 'recovery radar' },
+    { key: 'professionals', label: 'professionals', oppLabel: 'mandate radar' },
+    { key: 'valuers', label: 'valuers', oppLabel: 'valuation radar' },
+    { key: 'investors', label: 'investors', oppLabel: 'acquisition radar' },
+    { key: 'guarantors', label: 'guarantors', oppLabel: 'exposure radar' }
   ];
 
   const DOMAIN_CONSULTATIONS = {
@@ -876,9 +876,9 @@
     navOpportunities.textContent = config.oppLabel;
     document.title = `IBC - ${config.label} | Pan-India Statutory Radar`;
 
-    // Megamenu labels
-    intelligenceLabel.textContent = DOMAIN_INTELLIGENCE[currentSubdomain]?.label || `${oppWord} intelligence`;
-    consultationsLabel.textContent = DOMAIN_CONSULTATIONS[currentSubdomain]?.label || `${oppWord} consultations`;
+    // Megamenu labels in header
+    intelligenceLabel.textContent = 'process agents';
+    consultationsLabel.textContent = 'forensic agents';
 
     // Update Subdomain Dropdown Items Active State
     document.querySelectorAll('#subdomain-dropdown .dropdown-item[data-sub]').forEach(el => {

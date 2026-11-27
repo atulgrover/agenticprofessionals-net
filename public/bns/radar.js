@@ -874,9 +874,9 @@
     navOpportunities.textContent = config.oppLabel;
     document.title = `BNS - ${config.label} | Sovereign Criminal Jurisprudence Radar`;
 
-    // Megamenu labels
-    intelligenceLabel.textContent = DOMAIN_INTELLIGENCE[currentSubdomain]?.label || `${oppWord} intelligence`;
-    consultationsLabel.textContent = DOMAIN_CONSULTATIONS[currentSubdomain]?.label || `${oppWord} consultations`;
+    // Megamenu labels in header
+    intelligenceLabel.textContent = 'process agents';
+    consultationsLabel.textContent = 'forensic agents';
 
     // Update Subdomain Dropdown Items Active State
     document.querySelectorAll('#subdomain-dropdown .dropdown-item[data-sub]').forEach(el => {
