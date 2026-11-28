@@ -870,9 +870,9 @@
     const oppWord = config.oppLabel ? config.oppLabel.replace(' radar', '') : currentSubdomain;
 
     // Header Updates
-    brandTitleText.textContent = `BNS - ${config.label}`;
+    brandTitleText.textContent = `bns . ${config.label}`;
     navOpportunities.textContent = config.oppLabel;
-    document.title = `BNS - ${config.label} | Sovereign Criminal Jurisprudence Radar`;
+    document.title = `bns . ${config.label} | Sovereign Criminal Jurisprudence Radar`;
 
     // Megamenu labels in header
     intelligenceLabel.textContent = 'process agents';

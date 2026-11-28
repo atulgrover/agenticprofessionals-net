@@ -72,37 +72,72 @@ body {
 .brand-lockup {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   user-select: none;
 }
 
+.brand-home-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #0f172a;
+  transition: opacity 0.15s;
+}
+
+.brand-home-link:hover {
+  opacity: 0.85;
+}
+
 .unicorn-icon {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   fill: #0f172a;
   transition: transform 0.2s;
   flex-shrink: 0;
 }
 
-.brand-lockup:hover .unicorn-icon {
+.brand-home-link:hover .unicorn-icon {
   transform: scale(1.05);
+}
+
+.brand-main-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: #0f172a;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.brand-divider {
+  color: #cbd5e1;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1;
+  margin: 0 2px;
+  user-select: none;
 }
 
 .brand-title-btn {
   background: none;
   border: none;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 18px;
   font-weight: 700;
   color: #0f172a;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
+  line-height: 1;
   display: flex;
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 8px;
+  padding: 0;
+  margin: 0;
+  border-radius: 6px;
   transition: opacity 0.15s;
 }
 
@@ -110,11 +145,22 @@ body {
   opacity: 0.8;
 }
 
+#brand-title-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: #0f172a;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 .chevron-icon {
   width: 15px;
   height: 15px;
-  color: var(--slate-500);
+  color: #334155;
   transition: transform 0.2s;
+  flex-shrink: 0;
 }
 
 .subdomain-dropdown {

@@ -15,7 +15,7 @@
   // ─── 1. COMPREHENSIVE STAKEHOLDER DICTIONARIES ───
   const SUBDOMAINS = [
     { key: 'creditors', label: 'creditors', oppLabel: 'recovery radar' },
-    { key: 'professionals', label: 'professionals', oppLabel: 'mandate radar' },
+    { key: 'professionals', label: 'resoluters', oppLabel: 'mandate radar' },
     { key: 'valuers', label: 'valuers', oppLabel: 'valuation radar' },
     { key: 'investors', label: 'investors', oppLabel: 'acquisition radar' },
     { key: 'guarantors', label: 'guarantors', oppLabel: 'exposure radar' }
@@ -858,11 +858,14 @@
   function detectSubdomain() {
     const pathParts = window.location.pathname.split('/').filter(Boolean);
     const firstPart = pathParts[0];
-    const match = SUBDOMAINS.find(s => s.key === firstPart);
+    const match = SUBDOMAINS.find(s => s.key === firstPart || s.label === firstPart);
     if (match) return match.key;
     const urlParams = new URLSearchParams(window.location.search);
     const param = urlParams.get('subdomain');
-    if (param && SUBDOMAINS.some(s => s.key === param)) return param;
+    if (param && (SUBDOMAINS.some(s => s.key === param || s.label === param))) {
+      const pMatch = SUBDOMAINS.find(s => s.key === param || s.label === param);
+      return pMatch.key;
+    }
     return 'investors';
   }
 
@@ -872,9 +875,9 @@
     const oppWord = config.oppLabel ? config.oppLabel.replace(' opportunities', '') : currentSubdomain;
 
     // Header Updates
-    brandTitleText.textContent = `IBC - ${config.label}`;
+    brandTitleText.textContent = `ibc . ${config.label}`;
     navOpportunities.textContent = config.oppLabel;
-    document.title = `IBC - ${config.label} | Pan-India Statutory Radar`;
+    document.title = `ibc . ${config.label} | Pan-India Statutory Radar`;
 
     // Megamenu labels in header
     intelligenceLabel.textContent = 'process agents';
